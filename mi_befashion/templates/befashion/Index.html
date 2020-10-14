@@ -1,0 +1,179 @@
+{% extends "befashion/Base.html" %}
+
+{% block content %}
+
+{% csrf_token %} 
+<script type="text/javascript">
+function myFunction() {
+  var x = document.getElementById('extForm6-3e');
+  if (x.style.display === 'none') {
+    x.style.display = 'block';
+  } else {
+    x.style.display = 'none';
+  }
+}
+</script>
+
+<section class="features3 cid-s9gAS47hVx" id="extFeatures67-29" data-sortbtn="btn-primary">
+
+    <div class="container-fluid">
+        <div class="media-container-row">
+            <div class="card p-3 col-12 col-md-6 col-lg-6">
+                <div class="card-wrapper card1">
+                    <div class="card-box">
+                        <h4 class="card-title align-left mbr-semibold mbr-white mbr-fonts-style display-1">Befashion<br></h4><h4 class="card-title align-left mbr-semibold mbr-white mbr-fonts-style display-2"><strong>Accesories</strong></h4>
+                        <p class="mbr-text align-left mbr-white mbr-fonts-style display-7"><strong>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac feugiat neque.</strong></p>
+                        <div class="mbr-section-btn"><a href="/Accesories" class="btn btn-md btn-primary display-4">IR A LA PAGINA</a></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card p-3 col-12 col-md-6 col-lg-6">
+                <div class="card-wrapper card2">
+                    <div class="card-box">
+                        <h4 class="card-title align-left mbr-semibold mbr-white mbr-fonts-style display-1">Befashion</h4><h4 class="card-title align-left mbr-semibold mbr-white mbr-fonts-style display-2"><strong> Baby</strong></h4>
+                        <p class="mbr-text align-left mbr-white mbr-fonts-style display-7"><strong>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac feugiat neque.</strong></p>
+                        <div class="mbr-section-btn"><a href="/Baby" class="btn btn-md btn-primary display-4">IR A LA PAGINA</a></div>
+                    </div>
+
+                </div>
+            </div>
+
+              
+        </div>
+    </div>
+</section>
+
+<section class="extClients clients cid-s9gzIoz6JV" data-interval="false" id="extClients3-25" data-sortbtn="btn-primary">
+
+    <div class="container">
+        <div class="carousel slide" role="listbox" data-pause="true" data-keyboard="false" data-ride="carousel" data-interval="3000">
+            <div class="slider-clients">
+                <div class="carousel-inner" data-visible="5">                  
+  
+                    {% for c in marcas %}
+                     <div class="carousel-item ">
+                        <div class="media-container-row">
+                            <div class="col-md-12">
+                                <div class="wrap-img ">
+                                    <img src="{{c.foto.url}}" class="img-responsive clients-img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="carousel-controls">
+                  <a data-app-prevent-settings="" class="carousel-control carousel-control-prev" role="button" data-slide="prev">
+                      <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
+                      <span class="sr-only">Previo</span>
+                  </a>
+                  <a data-app-prevent-settings="" class="carousel-control carousel-control-next" role="button" data-slide="next">
+                      <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
+                      <span class="sr-only">Siguiente</span>
+                  </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="extFeatures cid-s9gUpE27er" id="extFeatures28-2k" data-sortbtn="btn-primary">
+    <div class="container">
+        <div class="media-container-row">
+            <div class="card col-12 col-md-4">
+                <h2 class="mbr-fonts-style mb-4 mbr-section-title display-2"><strong>Befashion</strong></h2>
+                <h3 class="mbr-text section-text mbr-fonts-style mbr-light display-7">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac feugiat neque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac feugiat neque.</h3>
+                <div class="mbr-section-btn pt-2"></div>
+            </div>
+            <div class="card col-12 col-md-4">
+                <div class="card-img">
+                    <img src="../../static/assets/befashion/images/mbr-1-1920x1280-800x533.jpg" alt="#" title="">
+                </div>
+                <div class="card-box">
+                    <h4 class="card-title mbr-fonts-style display-5">ACCESORIES</h4>
+                    <p class="mbr-text card-text mbr-fonts-style mbr-light display-7">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab cupiditate est eveniet.
+                    </p>
+                    <div class="mbr-section-btn"><a class="btn btn-md btn-primary mx-3 display-4" href="/Accesories">VER PAGINA</a></div>
+                </div>
+            </div>
+            <div class="card col-12 col-md-4">
+                <div class="card-img">
+                    <img src="../../static/assets/befashion/images/mbr-11-1920x1280.jpg" alt="" title="">
+                </div>
+                <div class="card-box">
+                    <h4 class="card-title mbr-fonts-style display-5">BABY</h4>
+                    <p class="mbr-text card-text mbr-fonts-style mbr-light display-7">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab cupiditate est eveniet.
+                    </p>
+                    <div class="mbr-section-btn"><a class="btn btn-md btn-primary mx-3 display-4" href="/Baby">VER PAGINA</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- AUTOMATIZAR UN ALEATORIO DE TODO LOS PRODUCTOS DESTACADOS DISPONIBLES DE AMBOS MODULOS-->
+
+<section class="mbr-gallery mbr-slider-carousel cid-s9gVrtecxt" id="extGallery7-2l" data-sortbtn="btn-primary">
+    
+
+    <div class="container">
+        <div>
+            <div class="mbr-gallery-row">
+                <div class="mbr-gallery-layout-default">
+                    <div>
+                        <div>
+                            {% for c in destacados %}
+                            <div class="mbr-gallery-item mbr-gallery-item--p2" data-video-url="false" data-tags="Increíble">
+                                <div href="#lb-extGallery7-2l" data-slide-to="{{forloop.counter0}}" data-toggle="modal">
+                                    <img src="{{c.foto.url}}" alt="" title=""><span class="icon-focus"></span><span class="mbr-gallery-title mbr-fonts-style display-7"><a href="../../{{c.modulo_idmodulo.nombre}}/item/{{c.slug}}/" class="text-white" style="font-size:30px;">VER PRODUCTO</a></span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <div data-app-prevent-settings="" class="mbr-slider modal fade carousel slide" tabindex="-1" data-keyboard="true" data-interval="false" id="lb-extGallery7-2l">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="carousel-inner">
+                                {% for c in destacados %}
+                                <div class="carousel-item {% if forloop.first %}active {% endif %}">
+                                    <img src="{{c.foto.url}}" alt="" title="">
+                                </div>
+                                {% endfor %}
+                                
+                            </div>
+                            <a class="carousel-control carousel-control-prev" role="button" data-slide="prev" href="#lb-extGallery7-2l">
+                                <span class="mbri-left mbr-iconfont" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control carousel-control-next" role="button" data-slide="next" href="#lb-extGallery7-2l">
+                                <span class="mbri-right mbr-iconfont" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                            <a class="close" href="#" role="button" data-dismiss="modal">
+                                <span class="sr-only">Close</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+{% endblock %}

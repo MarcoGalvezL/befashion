@@ -1,0 +1,99 @@
+{% extends "mi_cat/base.html" %}
+
+{% block head %}
+
+<link rel="shortcut icon" href="../../static/assets/images/cat-pipol-trans.png" type="image/x-icon">
+<title>Cat People Carrito</title>
+<meta name="description" content="{{producto.short}}">
+
+{% endblock %}
+{% block content %}
+
+<section class="services6 cid-s7df31AiFb" id="services6-16" data-sortbtn="btn-primary" style="padding-top: 150px">
+    <div class="container">
+        <div class="row">
+            <!--Titles-->
+            <div class="title col-12">
+                <h2 class="align-left mbr-fonts-style m-0 display-2">Carrito de compras</h2>
+                <div class="mbr-section-btn align-left py-4">
+                <a class="btn btn-success display-4" href="../../realizar_pedido">Terminar Compra</a>
+                </div>
+            </div>
+            {% for c in productos_en_carrito %}
+            <!--Card-1-->
+            <div class="card col-12 pb-5">
+                <div class="card-wrapper media-container-row media-container-row">
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-12 col-md-2">
+                                <!--Image-->
+                                <div class="mbr-figure">
+                                    <img src={{c.producto_idproducto.foto.url}} alt="Cat People">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-10">
+                                <div class="wrapper">
+                                    <div class="top-line pb-3">
+                                        <h4 class="card-title mbr-fonts-style display-5">
+                                            <a href="../../item/?id={{c.producto_idproducto.idproducto}}" class="text-success">{{c.producto_idproducto.nombre}} - Talla {{c.talla}} - Cantidad: {{c.cantidad}}</a></h4>
+                                        <p class="mbr-text cost mbr-fonts-style m-0 display-5">
+                                           $ {{c.subtotal}}
+                                        </p>
+                                    </div>
+                                    <div class="bottom-line">
+                                        <p class="mbr-text mbr-fonts-style display-7">
+                                            {{c.producto_idproducto.short}}<br>
+                                            <form action='../../del_carrito/' method="post" enctype="multipart/form-data">
+							                   {% csrf_token %}
+							                   {{alerta}}
+							                   <input type="hidden" name="eliminar" value={{c.idcarritohasproductos}}>
+							                   <button type="submit" style="align-content: center;background-color: transparent; border: none; padding: 0px; color: #f06292;">&times; Eliminar</button>
+							                </form> 
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="services5 cid-s7dfj04RpC" id="services5-17" data-sortbtn="btn-primary" style="padding-bottom: 0px ">
+    <div class="container">
+        <div class="row">
+            <!--Card-1-->
+            <div class="card px-3 col-12">
+                <div class="card-wrapper media-container-row media-container-row">
+                    <div class="card-box">
+                        <div class="top-line pb-3">
+                            <h4 class="card-title mbr-fonts-style display-2">Total</h4>
+                            <p class="mbr-text cost mbr-fonts-style m-0 display-5"><strong>$ {{carrito.total}}</strong><br><strong>+ Delivery</strong></p>
+                        </div>
+                        <div class="bottom-line">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+<section class="mbr-section info4 cid-s7dgfo9q1h" id="info4-18" data-sortbtn="btn-primary" style="padding-top: 0px; padding-bottom: 40px">
+    
+    <div class="container">
+        <div class="justify-content-center row">
+            <div class="media-container-column title col-12 col-md-10">
+                
+                <div class="mbr-section-btn align-right py-4">
+                  <a class="btn btn-success display-4" href="../../realizar_pedido">Terminar Compra</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

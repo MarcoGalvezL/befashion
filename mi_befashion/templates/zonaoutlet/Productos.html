@@ -1,0 +1,57 @@
+{% extends "zonaoutlet/base.html" %}
+
+{% block ddlcategoria %}
+<div class="dropdown-menu">
+    <a class="text-black dropdown-item display-4"  href="../productos">Todo<br></a>
+    {% for c in categorias %}
+        <a class="text-black dropdown-item display-4"  href="../productos?id={{c.idcategoria}}">{{c.nombre}}<br></a>
+    {% endfor %}        
+</div>
+{% endblock %}
+                        
+
+{% block content %}
+<section class="mbr-section extFeatures cid-s7CzH4u4F2" id="extShop9-f">    
+    <div class="container-fluid">
+            <h2 class="mbr-section-title align-left mbr-fonts-style mbr-white display-2">PRODUCTOS ZONA OUTLET</h2>
+            
+            <h3 class="mbr-section-subtitle display-5 align-left mbr-fonts-style mbr-light pb-5 mbr-white pt-3">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et vero asperiores dolorem placeat<br> blanditiis eligendi iure laborum, eum ratione ullam dolore at <br>assumenda ad inventore alias.
+            </h3>
+            <div class="container" style="padding: 0px">
+            <div class="media-container-row title ">
+                    <div class="mbr-section-btn align-center">
+                        <a class="btn btn-secondary-outline display-4" href="../productos">Todo</a>
+                        {% for c in categorias %}
+                        <a class="btn btn-secondary-outline display-4" href="../productos?id={{c.idcategoria}}"{{c.idcategoria}}>{{c.nombre}}</a>
+                        {% endfor %}
+                    </div>
+            </div>
+            </div>
+
+            
+
+            <div class="row justify-content-center">
+                {% for c in productos %}
+                <div class="card px-3 py-4 col-12 col-md-6 col-lg-3">
+                    <div class="card-wrapper ">
+                        <div class="card-img">
+                            <img src="{{c.foto.url}}" alt="zona_outlet">
+                        </div>
+                        <div class="card-box">
+                            <p class="mbr-text mbr-fonts-style align-center mbr-white display-5">{{c.nombre}}</p>
+                            <div class="prices align-center">
+                                <span class="oldPrice pr-3 mbr-fonts-style display-7">{{c.precio_ref}}</span>
+                                <span class="newPrice mbr-fonts-style mbr-bold display-2"><br>{{c.precio}}</span>
+                            </div>
+                            <div class="mbr-section-btn align-center pt-3"><a href="../item?id={{c.idproducto}}" class="btn btn-md btn-primary display-4">VER MÁS</a></div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+    
+            </div>
+    </div>
+</section>
+{% endblock %}

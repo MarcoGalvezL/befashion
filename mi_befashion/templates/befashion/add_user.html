@@ -1,0 +1,104 @@
+{% extends "befashion/Base.html" %}
+
+{% block content %}
+<br/>
+<br/>
+<br/>
+
+<section class="features3 cid-s9gAS47hVx" id="content4-x" style="padding-top: 40px">
+    <div class="container">
+        <div class="media-container-row">
+            <div class="title col-12 col-md-8">
+                <h2 class="align-center pb-3 mbr-fonts-style display-1">
+                	<strong>{{titulo}}</strong>
+                </h2>
+                <h3 class="mbr-section-subtitle align-center mbr-light mbr-fonts-style display-5">
+                	Completa el formulario con tus datos y listo!
+                </h3>
+            </div>
+        </div>
+    </div>
+</section>
+<br/>
+<section class="features3 cid-s9gAS47hVx" id="content12-y">
+    <div class="container">
+        <div class="media-container-row">
+            <div class="mbr-text counter-container col-12 col-md-8 mbr-fonts-style display-7">
+                <form action='../user_added/' method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					<div class="dragArea form-row">
+                        {% if user.is_authenticated %}
+                        <input type="hidden" name="pkcliente" id="pkcliente" value="{{cliente.idcliente}}"/>
+						<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                            <span class="mbr-iconfont mobi-mbri-letter mobi-mbri" for="email-extForm25-6"></span>
+                            <input type="text" name="nombre" placeholder="Nombre" value="{{cliente.nombre}}" class="form-control display-7" required="">
+                        </div>
+						<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                            <span class="mbr-iconfont mobi-mbri-letter mobi-mbri" for="email-extForm25-6"></span>
+                            <input type="text" name="apellido" placeholder="Apellido" value="{{cliente.apellido}}" class="form-control display-7" required="">
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group"  data-for="phone">
+                            <span class="mbr-iconfont mobi-mbri-phone mobi-mbri" for="phone-extForm25-6"></span>
+                            <input type="tel" name="phone" placeholder="Phone" value="{{cliente.telefono}}" class="form-control display-7" required="">
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group"  data-for="phone">
+                            <span class="mbr-iconfont mobi-mbri-phone mobi-mbri" for="phone-extForm25-6"></span>
+                            <input type="text" name="direccion" placeholder="Direccion" value="{{cliente.direccion}}" class="form-control display-7" required="">
+                        </div>
+                        {% else %}
+                        <input type="hidden" name="pkcliente" id="pkcliente" value="0"/>
+						<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                            <span class="mbr-iconfont mobi-mbri-letter mobi-mbri" for="email-extForm25-6"></span>
+                            <input type="text" name="nombre" placeholder="Nombre" class="form-control display-7" required="">
+                        </div>
+						<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                            <span class="mbr-iconfont mobi-mbri-letter mobi-mbri" for="email-extForm25-6"></span>
+                            <input type="text" name="apellido" placeholder="Apellido" class="form-control display-7" required="">
+                        </div>
+						<div class="col-lg-12 col-md-12 col-sm-12 form-group" data-for="email">
+                            <span class="mbr-iconfont mobi-mbri-letter mobi-mbri" for="email-extForm25-6"></span>
+                            <input type="email" name="email" placeholder="Email" class="form-control display-7" required="">
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group"  data-for="phone">
+                            <span class="mbr-iconfont mobi-mbri-phone mobi-mbri" for="phone-extForm25-6"></span>
+                            <input type="tel" name="phone" placeholder="Telefono" class="form-control display-7" required="">
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group"  data-for="phone">
+                            <span class="mbr-iconfont mobi-mbri-phone mobi-mbri" for="phone-extForm25-6"></span>
+                            <input type="text" name="direccion" placeholder="Direccion" class="form-control display-7" required="">
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                            <span class="mbr-iconfont mobi-mbri-phone mobi-mbri" for="phone-extForm25-6"></span>
+                            <input type="password" id="password" name="password" placeholder="Contraseña" class="form-control display-7" required="">
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group" >
+                            <span class="mbr-iconfont mobi-mbri-phone mobi-mbri" for="phone-extForm25-6"></span>
+                            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmar contraseña" class="form-control display-7" required="">
+                        </div>
+                        {% endif %}
+                		<button type="submit" class="btn btn-info display-4">{{Btnsave}}</button>
+                	</div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+	var password = document.getElementById("password")
+  , confirm_password = document.getElementById("confirm_password");
+
+	function validatePassword(){
+	  if(password.value != confirm_password.value) {
+	    confirm_password.setCustomValidity("Passwords Don't Match");
+	  } else {
+	    confirm_password.setCustomValidity('');
+	  }
+	}
+
+	password.onchange = validatePassword;
+	confirm_password.onkeyup = validatePassword;
+</script>
+
+
+{% endblock%}

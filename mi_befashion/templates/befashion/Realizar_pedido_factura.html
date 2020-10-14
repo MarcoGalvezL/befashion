@@ -1,0 +1,71 @@
+{% extends "befashion/Base.html" %}
+{% block content %}
+<section class="services5 cid-s8OYpXCp6Z" id="services5-v">
+    <div class="container">
+        <div class="media-container-row">
+            <div class="col-md-10 col-lg-8 block-content">
+                <div>
+                    <div class="dragArea form-row">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4"> 
+                                    <a class="btn btn-sm btn-danger" href="/realizar_pedido" style="float: right;">
+                                        ¿Solo Boleta?
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h2 class="mbr-fonts-style mbr-fonts-style mb-4 display-2">Realizar tu pedido (Factura)</h2>
+                        </div>
+                        <div class="col-md-12 input-group-btn mt-2">
+                            <form action='../realizar_pedido2/' method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="hidden" name="tipoDocumento" value="factura" >
+                                <div data-for="name" class="col-md-12  form-group">
+                                    <input type="text" name="rut" placeholder="RUT" data-form-field="Name"  class="form-control input display-7" required="required" autofocus>
+                                </div>
+                                <div data-for="name" class="col-md-12  form-group">
+                                    <input type="text" name="razonsocial" placeholder="Razon Social" data-form-field="Name"  class="form-control input display-7" required="required"  >
+                                </div>
+                                <div data-for="name" class="col-md-12  form-group">
+                                    <input type="text" name="industria" placeholder="Industria" data-form-field="Name"  class="form-control input display-7" required="required"  >
+                                </div>
+                                <div data-for="name" class="col-md-12  form-group">
+                                    <input type="text" name="nombre" placeholder="Nombre" data-form-field="Name" value="{{cliente.nombre}}" class="form-control input display-7" required="required"  >
+                                </div>
+                                <div data-for="email" class="col-md-12  form-group">
+                                    <input type="text" name="email" placeholder="Email" data-form-field="Email" value="{{cliente.email}}" class="form-control input display-7" required="required"  >
+                                </div>
+                                <div data-for="email" class="col-md-12  form-group">
+                                    <input type="text" name="telefono" placeholder="Telefono" data-form-field="Telefono" value="{{cliente.telefono}}" class="form-control input display-7" required="required"  >
+                                </div>
+                                <div data-for="email" class="col-md-12  form-group">
+                                    <input type="text" name="direccion" class="form-control display-7 form-group" value="{{cliente.direccion}}" placeholder="Direccion" required="" id="id_direccion">
+                                </div>
+                                <div data-for="email" class="col-md-12  form-group">
+                                    <select class="form-control input display-7 form-group" required="required" name="delivery" >
+                                        {% for c in delivery %}
+                                           <option value="{{c.iddelivery}} " > {{c.nombre}} </option>
+                                        {% endfor %}
+                                   </select>
+                                </div>  
+                                <div class="col-md-12  form-group" data-for="message">
+                                    <textarea type="textarea" name="message" placeholder="Notas" data-form-field="Message" class="form-control input display-7"></textarea>
+                                </div>
+                                <div class="col-md-12 input-group-btn mt-2">
+                                    <button type="submit" class="btn btn-form btn-bgr btn-success display-4">Pagar</button>
+                                </div> 
+                                <br/>
+                                <!-- {{form.as_table}} -->
+                            </form>
+                         </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

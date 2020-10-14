@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html  >
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="shortcut icon" href="../../../static/assets/befashion/images/1.png" type="image/x-icon">
+  <meta name="description" content="">
+  
+  
+  <title>Home</title>
+  <link rel="stylesheet" href="../../../static/assets/befashion/web/assets/mobirise-icons/mobirise-icons.css">
+  <link rel="stylesheet" href="../../../static/assets/befashion/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../../static/assets/befashion/bootstrap/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="../../../static/assets/befashion/bootstrap/css/bootstrap-reboot.min.css">
+  <link rel="stylesheet" href="../../../static/assets/befashion/dropdown/css/style.css">
+  <link rel="stylesheet" href="../../../static/assets/befashion/theme/css/style.css">
+  <link rel="stylesheet" href="../../../static/assets/befashion/gallery/style.css">
+  <link rel="preload" as="style" href="../../../static/assets/befashion/mobirise/css/mbr-additional.css"><link rel="stylesheet" href="../../../static/assets/befashion/mobirise/css/mbr-additional.css" type="text/css">
+  
+  <script src="../../../static/assets/befashion/web/assets/lazyload/lazyload.js"></script>
+
+  
+
+</head>
+<body>
+  <section class="menu cid-s9Waa83dTJ" once="menu" id="menu3-3b" data-sortbtn="btn-primary">
+
+    <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
+        <div class="navbar-brand">
+            <span class="navbar-logo">
+                <a href="../../">
+                    <img src="../../../static/assets/befashion/images/logo_negro.png" alt="#" title="" style="height: 3.8rem;">
+                </a>
+            </span>
+            
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+                <li class="nav-item">
+                    <a class="nav-link link text-black display-4" href="../../../Accesories">Accesories</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link link text-black dropdown-toggle display-4" href="#" data-toggle="dropdown-submenu" aria-expanded="false" style="vertical-align: bottom;display:inline-block">Productos</a>
+                    <div class="dropdown-menu">
+                        <a class="text-black dropdown-item display-4" href="../../../Accesories/productos">Todas<br></a>                        
+                        {% for c in categorias %}
+                        <a class="text-black dropdown-item display-4" href="../../../Accesories/productos?Categoria={{c.idcategoria}}">{{c.nombre}}<br></a>
+                        {% endfor %}
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link link text-black dropdown-toggle display-4" href="#" data-toggle="dropdown-submenu">Marcas</a>
+                    <div class="dropdown-menu">                        
+                        <a class="text-black dropdown-item display-4" href="../../../Accesories/productos">Todas<br></a>
+                        {% for c in marcas %}
+                        <a class="text-black dropdown-item display-4" href="../../../Accesories/productos?Marca={{c.idmarca}}">{{c.nombre}}<br></a>
+                        {% endfor %}
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link text-black display-4" href="../../../Accesories/nosotros">Sobre Nosotros</a>
+                </li>
+            </ul>
+            <div class="icons-menu">
+              <a href="/" target="">
+                <span class="p-2 mbr-iconfont mbri-home" style="color: rgb(0, 0, 0); fill: rgb(0, 0, 0); font-size: 35px;"></span>
+              </a>
+              <a onclick="myFunction()" target="_blank">
+                <span class="p-2 mbr-iconfont mbri-search" style="font-size: 35px; color: rgb(0, 0, 0); fill: rgb(0, 0, 0);"></span>
+              </a>
+              <a href="#" >
+                <span class="p-2 mbr-iconfont mbri-mobile" style="font-size: 35px; color: rgb(35, 35, 35); fill: rgb(35, 35, 35);"></span>
+              </a>
+               
+              
+            </div>
+            <div class="navbar-buttons mbr-section-btn">
+                <div class="row">
+                    <a class="btn btn-sm btn-black-outline display-4" href="../../../../carrito">
+                        <span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn">
+                        </span>CARRITO {% if request.session.Cantidad %}({{request.session.Cantidad}}){% else %}(0){% endif %}
+                    </a>
+                    {% if user.is_authenticated %}
+                        <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+                            <li class="nav-item dropdown">
+                                <a class="dropdown-toggle btn btn-sm btn-primary display-4" href="/login/" data-toggle="dropdown-submenu"  >
+                                    <span class="mbri-user mbr-iconfont mbr-iconfont-btn">
+                                    </span>{{cliente.nombre}} {{cliente.apellido}}
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="text-black dropdown-item display-4" href="/login">Mi Perfil<br></a>
+                                    <a class="text-black dropdown-item display-4" href="/log_out">Log Out<br></a>
+                                </div>
+                            </li>
+                        </ul>
+                    {% else %}
+                        <a class="btn btn-sm btn-primary display-4" href="/login/">
+                            <span class="mbri-user mbr-iconfont mbr-iconfont-btn">
+                            </span>
+                            Log in
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+      </div>
+      <div class="container"  id="extForm6-3e" style="display: none;">
+        <div class="media-container-row">
+            <div class="col-md-12 col-lg-12 block-content">                
+                
+                <div class="form-block">
+                        <form action="#" method="POST" class="mbr-form form-with-styler">
+                          {% csrf_token %}
+                            <div class="dragArea row justify-content-center">
+                                <div class="col-md-6 col-lg-4 mb-4 form-group" data-for="email" draggable="false">
+                                    <input type="text" name="nombre_pro" placeholder="Buscar Producto" data-form-field="Email" required="required" class="form-control input display-7" id="nombre_pro">
+                                </div>
+                                <div class="col-auto mbr-section-btn mb-4" draggable="false">
+                                    <input type="button" onclick="buscar()" class="btn btn-bgr btn-form btn-black-outline display-4" value="Buscar">
+                                </div>
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </nav>
+   
+</section>
+
+
+
+
+
+
+{% block content %}
+
+{% endblock %}
+    
+<section class="extFooter cid-s9gWXQbvbS" id="extFooter25-2r" data-sortbtn="btn-primary">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12">
+                <div class="navbar-brand pb-3">
+                    <div class="logo">
+                        <a href="#">
+                            <img class="navbar-logo" src="../../static/assets/befashion/images/logo_negro.png" alt="#" title="">
+                        </a>
+                    </div>
+                    <br>
+                    <div class="logo">
+                        <a href="#">
+                            <img class="navbar-logo" src="../../static/assets/befashion/images/logo_negro_baby.png" alt="#" title="">
+                        </a>
+                    </div>
+                </div>
+                <h4 class="mbr-text mbr-fonts-style logo-sub-title display-4"><em>Slogan de la marca</em></h4>
+            </div>
+
+            <div class="col-lg-4 col-md-12 col-sm-12">
+                <h3 class="mbr-text mbr-bold mbr-fonts-style group-title display-5">
+                    Contactanos</h3>
+
+                <div class="stripe"></div>
+
+                <div class="mbr-row items mbr-white">
+                    
+                    
+                <div class="list-item mbr-col-lg-12 mbr-col-md-12 mbr-col-sm-12">
+                        <span class="mbr-iconfont listico mbri-tablet-vertical" style="color: rgb(10, 28, 68); fill: rgb(10, 28, 68);"></span>
+                        <h5 class="mbr-fonts-style text2 display-4">123-456-78901</h5>
+                    </div><div class="list-item mbr-col-lg-12 mbr-col-md-12 mbr-col-sm-12">
+                        <span class="mbr-iconfont listico mbri-pin" style="color: rgb(10, 28, 68); fill: rgb(10, 28, 68);"></span>
+                        <h5 class="mbr-fonts-style text2 display-4">London, 51 Street, 43</h5>
+                    </div><div class="list-item mbr-col-lg-12 mbr-col-md-12 mbr-col-sm-12">
+                        <span class="mbr-iconfont listico mbri-letter" style="color: rgb(10, 28, 68); fill: rgb(10, 28, 68);"></span>
+                        <h5 class="mbr-fonts-style text2 display-4">name@site.com</h5>
+                    </div></div>
+
+                <div class="social-list py-4">
+                    <div class="soc-item">
+                        <a href="#" target="_blank">
+                            <div class="mbr-iconfont mbr-iconfont-social socicon-twitter socicon" style="color: rgb(101, 101, 101); fill: rgb(101, 101, 101);" media-simple="true"></div>
+                        </a>
+                    </div>
+                    <div class="soc-item">
+                        <a href="#" target="_blank">
+                            <div class="mbr-iconfont mbr-iconfont-social socicon-facebook socicon" style="color: rgb(101, 101, 101); fill: rgb(101, 101, 101);" media-simple="true"></div>
+                        </a>
+                    </div>
+                    <div class="soc-item">
+                        <a href="#" target="_blank">
+                            <div class="mbr-iconfont mbr-iconfont-social socicon-googleplus socicon" style="color: rgb(101, 101, 101); fill: rgb(101, 101, 101);" media-simple="true"></div>
+                        </a>
+                    </div>
+                    <div class="soc-item">
+                        <a href="#" target="_blank">
+                            <div class="mbr-iconfont mbr-iconfont-social socicon-skype socicon" style="color: rgb(101, 101, 101); fill: rgb(101, 101, 101);" media-simple="true"></div>
+                        </a>
+                    </div>
+                    <div class="soc-item">
+                        <a href="#" target="_blank">
+                            <div class="mbr-iconfont mbr-iconfont-social socicon-instagram socicon" style="color: rgb(101, 101, 101); fill: rgb(101, 101, 101);" media-simple="true"></div>
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-12 col-sm-12 img-list">
+                <h3 class="mbr-text mbr-bold mbr-fonts-style group-title display-5">+ Be Fashion</h3>
+                <div class="stripe"></div>
+
+                <p class="mbr-text mbr-normal py-2 links mbr-fonts-style display-4">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. <br><br>
+                    <a class="btn btn-md btn-primary mx-3 display-4" href="/Accesories">ACCESORIES</a>
+                    <a class="btn btn-md btn-primary mx-3 display-4" href="/Baby"> BABY</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+  <script src="../../../static/assets/befashion/web/assets/jquery/jquery.min.js"></script>
+  <script src="../../../static/assets/befashion/popper/popper.min.js"></script>
+  <script src="../../../static/assets/befashion/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../../../static/assets/befashion/smoothscroll/smooth-scroll.js"></script>
+  <script src="../../../static/assets/befashion/dropdown/js/nav-dropdown.js"></script>
+  <script src="../../../static/assets/befashion/dropdown/js/navbar-dropdown.js"></script>
+  <script src="../../../static/assets/befashion/touchswipe/jquery.touch-swipe.min.js"></script>
+  <script src="../../../static/assets/befashion/ytplayer/jquery.mb.ytplayer.min.js"></script>
+  <script src="../../../static/assets/befashion/vimeoplayer/jquery.mb.vimeo_player.js"></script>
+  <script src="../../../static/assets/befashion/masonry/masonry.pkgd.min.js"></script>
+  <script src="../../../static/assets/befashion/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="../../../static/assets/befashion/bootstrapcarouselswipe/bootstrap-carousel-swipe.js"></script>
+  <script src="../../../static/assets/befashion/mbr-clients-slider/mbr-clients-slider.js"></script>
+  <script src="../../../static/assets/befashion/mobirise-shop/script.js"></script>
+  <script src="../../../static/assets/befashion/theme/js/script.js"></script>
+  <script src="../../../static/assets/befashion/gallery/player.min.js"></script>
+  <script src="../../../static/assets/befashion/gallery/script.js"></script>
+  <script src="../../../static/assets/befashion/slidervideo/script.js"></script>
+  <script src="../../../static/assets/befashion/formoid/formoid.min.js"></script>
+
+  <script type="text/javascript">  
+
+    $( document ).ready(function() {
+        
+    })
+
+    function buscar(){
+        let nombrepro = $('#nombre_pro').val();
+        let url ="../../Accesories/productos/?Nombre="+nombrepro+"#content11-10";
+        console.log("URL:"+url);
+        window.location.href = url;
+    }
+
+  </script>
+
+{% block script %}
+    
+{% endblock %}
+
+</body>
+</html>

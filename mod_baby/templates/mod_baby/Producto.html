@@ -1,0 +1,318 @@
+{% extends "mod_baby/Base.html" %}
+{% block content %}
+<script type="text/javascript">
+   function myFunction() {
+     var x = document.getElementById('extForm6-3e');
+     if (x.style.display === 'none') {
+       x.style.display = 'block';
+     } else {
+       x.style.display = 'none';
+     }
+   }  
+</script>
+<section class="header6 cid-s8PVOAlbV2" id="header6-18">
+   <div class="mbr-overlay" style="opacity: 0.4; background-color: rgb(0, 0, 0);">
+   </div>
+   <div class="container-fluid">
+      <div class="row justify-content-center">
+         <div class="col-12 col-lg-6 col-md-8 align-center">
+            <h3 class="mbr-section-subtitle align-center mbr-fonts-style mbr-light pb-3 mbr-white display-5">Bienvenido a nuestra tienda</h3>
+            <h2 class="mbr-section-title align-center mbr-fonts-style mbr-bold mbr-white display-1">PRODUCTOS</h2>
+         </div>
+      </div>
+   </div>
+</section>
+<section class="mbr-section content11 cid-s8PekU0Uoa hide" id="content11-10" >
+   <div class="container-fluid">
+      <div class="row justify-content-center">
+         <div class="col-12 col-lg-12">
+            <div class="mbr-section-btn align-center">
+               {% for c in marcas %}
+               <a class="btn btn-warning-outline display-4" href="../../Baby/productos?Marca={{c.idmarca}}">{{c.nombre}}</a> 
+               {% endfor %}
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<section class="mbr-gallery cid-s8Pbva6BSo" id="shop1-y">
+   <div>
+      <div class="mbr-shop" show-sidebar="" card-buttons="" shop__showsidebar="">
+         <!-- Shop Gallery -->
+         <div class="row mbr-shop__row col-md-12">
+            <div class="wrapper-shop-items col-xl-9">
+               <div class="mbr-gallery-row">
+                  <div>
+                     <div class="shop-items">
+                        {% for c in productos %}
+                        <div class="mbr-gallery-item" data-slide-to="0" >
+                           <div class="item_overlay" data-toggle="modal"></div>
+                           <div class="galleryItem" data-toggle="modal">
+                              <div class="style_overlay"></div>
+                              <div class="img_wraper">
+                                 <img src="{{c.foto.url}}">
+                              </div>
+                                 {% if c.preventa is True %}
+                                 <span class="onsale mbr-fonts-style display-7" data-onsale="false" style="display: block;">PRVENTA</span>
+                                 {% elif c.promocion is True %}
+                                 <span class="onsale mbr-fonts-style display-7" data-onsale="false" style="display: block;">SALE</span>
+                                 {% endif %}
+                              <div class="sidebar_wraper">
+                                 <h4 class="item-title mbr-fonts-style mbr-text display-5">{{c.nombre}} - {{c.marca_idmarca.nombre}}</h4>
+                                 <div class="price-block">
+                                    {% if c.preventa is True %}
+                                       <span class="shop-item-price mbr-fonts-style display-5" >${{c.precio_promocion}}</span>
+                                    {% elif c.promocion is True %}
+                                       <span class="shop-item-price mbr-fonts-style display-5">${{c.precio_promocion}}</span>
+                                       <span class="oldprice mbr-fonts-style display-7" >${{c.precio}}</span>
+                                    {% else %}
+                                       <span class="shop-item-price mbr-fonts-style display-5" >${{c.precio}}</span>
+                                    {% endif %}
+                                 </div>
+                                 <div class="card-description">
+                                    {{c.descripcion | linebreaks}}
+                                 </div>
+                                 <div class="mbr-section-btn" buttons="0" style="display: none;">
+                                    <!-- <a class="btn btn-sm btn-danger display-4" href="#"><span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>Añadir al Carrito </a> -->
+                                    <a class="btn btn-sm btn-danger display-4" href="../../Baby/item/{{c.slug}}/">Ver más</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        {% endfor %} 
+                     </div>
+                  </div>
+                  <div class="clearfix"></div>
+               </div>
+            </div>
+
+            <div class="shopItemsModal_wraper" style="z-index: 2500;">
+         <div class="shopItemsModalBg"></div>
+         <div class="shopItemsModal row">
+            <div class="col-md-6 image-modal"></div>
+            <div class="col-md-6 text-modal"></div>
+            <div class="closeModal">
+               <div class="close-modal-wrapper"></div>
+            </div>
+         </div>
+      </div>
+
+            
+            <div class="col-xl-3 sidebar">
+               <div class="sidebar-background"></div>
+               <div class="sidebar-block container sidebar-categories">
+                  <h4 class="sidebar-title mbr-fonts-style mbr-text display-7">Filtrar Productos</h4>
+                  <div class="panel-group">
+                     <div class="panel panel-default">
+                        <div class="panel-heading">
+                           <h4 class="panel-title sidebar-title mbr-fonts-style mbr-text display-7">
+                              <a class="text-black" data-toggle="collapse" href="#collapse1"> ▾ Marcas</a>
+                           </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                           {% for c in marcas %}
+                           <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="{{c.idmarca}}" name="marca[]">
+                              <label class="form-check-label sidebar-title mbr-fonts-style mbr-text display-7" for="defaultCheck1">
+                              {{c.nombre}}
+                              </label>
+                           </div>
+                           {% endfor %}                           
+                        </div>
+                     </div>
+                  </div>
+                  <div class="panel-group">
+                     <div class="panel panel-default">
+                        <div class="panel-heading">
+                           <h4 class="panel-title sidebar-title mbr-fonts-style mbr-text display-7">
+                              <a class="text-black" data-toggle="collapse" href="#collapse2"> ▾ Categorias</a>
+                           </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                            {% for c in categorias %}
+                           <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="{{c.idcategoria}}" name="categoria[]">
+                              <label class="form-check-label sidebar-title mbr-fonts-style mbr-text display-7" for="defaultCheck1">
+                              {{c.nombre}}
+                              </label>
+                           </div>
+                           {% endfor %} 
+                            
+                        </div>
+                     </div>
+                  </div>
+                  <div class="panel-group">
+                     <div class="panel panel-default">
+                        <div class="panel-heading">
+                           <h4 class="panel-title sidebar-title mbr-fonts-style mbr-text display-7">
+                              <a class="text-black" data-toggle="collapse" href="#collapse3"> ▾ Tallas</a>
+                           </h4>
+                        </div>
+                        <div id="collapse3" class="panel-collapse collapse">
+                            {% for c in tallas %}
+                           <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="{{c.idtalla}}" name="talla[]">
+                              <label class="form-check-label sidebar-title mbr-fonts-style mbr-text display-7" for="defaultCheck1">
+                              {{c.nombre}}
+                              </label>
+                           </div>
+                           {% endfor %}                             
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+
+
+         </div>
+      </div>
+      
+   </div>   
+</section>
+{% endblock %}
+
+
+
+{% block script %}
+<script type="text/javascript">    
+   $( document ).ready(function() {
+      let queryString = window.location.search;
+      ////console.log(queryString);
+      let urlParams = new URLSearchParams(queryString);
+      let cod_marca = urlParams.get('Marca')
+      let cod_categoria = urlParams.get('Categoria')
+      let cod_talla = urlParams.get('Talla')
+      ////console.log(cod_marca,cod_categoria);
+      //--
+      if (cod_marca!= null)
+      {
+         a_cod_marca = cod_marca.split(',')
+         ////console.log(a_cod_marca);      
+         var checkboxes = document.getElementsByName('marca[]');
+         ////console.log(checkboxes);
+         var vals = "";
+         //for (var i=0, n=checkboxes.length;i<n;i++) 
+         for (var i = 0; i < checkboxes.length; i++)
+         {
+            if(a_cod_marca.indexOf($(checkboxes[i]).val())>=0 )
+            {
+               ////console.log($(checkboxes[i]).val())
+               $(checkboxes[i]).prop( "checked", true );            
+               $("#collapse1").removeClass("collapse");
+            }
+            
+         }
+      }
+      //---
+      if (cod_categoria!= null)
+      {
+         a_cod_categoria = cod_categoria.split(',')
+         ////console.log(a_cod_categoria);      
+         var checkboxes = document.getElementsByName('categoria[]');
+         ////console.log(checkboxes);
+         var vals = "";
+         //for (var i=0, n=checkboxes.length;i<n;i++) 
+         for (var i = 0; i < checkboxes.length; i++)
+         {
+            ////console.log($(checkboxes[i]).val())
+            if(a_cod_categoria.indexOf($(checkboxes[i]).val())>=0 )
+            {
+               ////console.log($(checkboxes[i]).val())
+               $(checkboxes[i]).prop( "checked", true );            
+               $("#collapse2").removeClass("collapse");
+            }
+            
+         }
+      }      
+      //--
+      if (cod_talla!= null)
+      {
+         a_cod_talla = cod_talla.split(',')
+         ////console.log(a_cod_categoria);      
+         var checkboxes = document.getElementsByName('talla[]');
+         ////console.log(checkboxes);
+         var vals = "";
+         //for (var i=0, n=checkboxes.length;i<n;i++) 
+         for (var i = 0; i < checkboxes.length; i++)
+         {
+            ////console.log($(checkboxes[i]).val())
+            if(a_cod_talla.indexOf($(checkboxes[i]).val())>=0 )
+            {
+               ////console.log($(checkboxes[i]).val())
+               $(checkboxes[i]).prop( "checked", true );            
+               $("#collapse3").removeClass("collapse");
+            }
+            
+         }
+      }
+      //--
+      var checkboxes = document.getElementsByName('marca[]');
+      $("input:checkbox[name='marca[]']").click(function() {         
+         Direccionar();
+      });
+      $("input:checkbox[name='categoria[]']").click(function() {         
+         Direccionar();
+      });
+      $("input:checkbox[name='talla[]']").click(function() {         
+         Direccionar();         
+      });
+      //--
+   });
+
+   function Direccionar()
+   {
+      let checkboxes = document.getElementsByName('marca[]');
+      let vals_marca = "";
+      let vals_categoria = "";
+      let vals_talla = "";
+      let url_array = [];
+      for (var i = 0; i < checkboxes.length; i++)
+      {
+         if (checkboxes[i].checked) 
+         {
+            vals_marca += ","+checkboxes[i].value;
+         }
+      }
+      if (vals_marca) {
+         vals_marca = vals_marca.substring(1);
+         url_array.push("Marca="+vals_marca)
+      }      
+      //--
+      checkboxes = document.getElementsByName('categoria[]');      
+      for (var i = 0; i < checkboxes.length; i++)
+      {
+         if (checkboxes[i].checked) 
+         {
+            vals_categoria += ","+checkboxes[i].value;
+         }
+      }
+      if (vals_categoria) 
+      {
+         vals_categoria = vals_categoria.substring(1);
+         url_array.push("Categoria="+vals_categoria)
+      }
+      //--      
+      checkboxes = document.getElementsByName('talla[]');      
+      for (var i = 0; i < checkboxes.length; i++)
+      {
+         if (checkboxes[i].checked) 
+         {
+            vals_talla += ","+checkboxes[i].value;
+         }
+      }
+      if (vals_talla) 
+      {
+         vals_talla = vals_talla.substring(1);
+         url_array.push("Talla="+vals_talla)
+      }
+
+      //--      
+      let cad_url = url_array.join('&')      
+      let url ="../../Baby/productos/?"+cad_url+"#content11-10";
+      console.log("URL:"+url);
+      window.location.href = url;
+      //--
+   }
+</script>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "zonaoutlet/base.html" %}
+{% block ddlcategoria %}
+<div class="dropdown-menu">
+    <a class="text-black dropdown-item display-4"  href="../productos">Todo<br></a>
+    {% for c in categorias %}
+        <a class="text-black dropdown-item display-4"  href="../productos?id={{c.idcategoria}}">{{c.nombre}}<br></a>
+    {% endfor %}        
+</div>
+{% endblock %}
+              
+
+{% block content %}
+<section class="header14 cid-s7CFvJyvVa mbr-parallax-background" id="header14-n">   
+
+    <div class="mbr-overlay" style="opacity: 0.7; background-color: rgb(35, 35, 35);">
+    </div>
+
+    <div class="container">
+        <div class="media-container-row">
+
+            <div class="mbr-figure" style="width: 85%;">
+                <img src="../static/assets/zonaoutlet/images/captura-de-pantalla-2020-08-10-a-las-18.29.58.png" alt="zona_outlet" title="">
+            </div>
+
+            <div class="media-content">
+                <h1 class="mbr-section-title pb-3 align-left mbr-white mbr-fonts-style display-1">zona OUTLET</h1>
+                <h3 class="mbr-section-subtitle align-left  mbr-light pb-3 mbr-white mbr-fonts-style display-2">Lo mismo, más barato.</h3>
+                <div class="mbr-section-text  pb-3 ">
+                    <p class="mbr-text align-left mbr-white mbr-fonts-style display-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et vero asperiores dolorem placeat<br>blanditiis eligendi iure laborum, eum ratione ullam dolore at assumenda ad inventore alias.<br><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et vero asperiores dolorem placeat<br>blanditiis eligendi iure laborum, eum ratione ullam dolore at assumenda ad inventore alias.<br></p>
+                </div>
+
+                <div class="media-container-column" data-form-type="formoid">                    
+                    <form action="#" method="POST" class="mbr-form form-with-styler" >
+                        <div class="row form-inline">
+                            <div hidden="hidden" data-form-alert="" class="alert alert-success col-12">Thanks for filling out the form!</div>
+                            <div hidden="hidden" data-form-alert-danger="" class="alert alert-danger col-12">
+                            </div>
+                        </div>
+                        <div class="dragArea row form-inline">
+                            <div class="col-auto form-group" data-for="email">
+                                <input type="email" name="email" placeholder="Email" data-form-field="Email" required="required" class="form-control input-sm input-inverse display-7" id="email-header14-n">
+                            </div>
+                            <div class="col-auto buttons-wrap"><button type="submit" class="btn btn-secondary display-4">SUBSCRIBE</button></div>
+                        </div>
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

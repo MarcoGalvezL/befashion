@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html  >
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="shortcut icon" href="../../static/assets/zonaoutlet/images/captura-de-pantalla-2020-08-10-a-las-18.29.58.png" type="image/x-icon">
+  <meta name="description" content="Web Site Builder Description">
+  
+  
+  <title>productos</title> 
+  <link rel="stylesheet" href="../../static/assets/zonaoutlet/web/assets/mobirise-icons/mobirise-icons.css">
+  <link rel="stylesheet" href="../../static/assets/zonaoutlet/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../static/assets/zonaoutlet/bootstrap/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="../../static/assets/zonaoutlet/bootstrap/css/bootstrap-reboot.min.css">
+  <link rel="stylesheet" href="../../static/assets/zonaoutlet/socicon/css/styles.css">
+  <link rel="stylesheet" href="../../static/assets/zonaoutlet/tether/tether.min.css">
+  <link rel="stylesheet" href="../../static/assets/zonaoutlet/formstyler/jquery.formstyler.css">
+  <link rel="stylesheet" href="../../static/assets/zonaoutlet/formstyler/jquery.formstyler.theme.css">
+  <link rel="stylesheet" href="../../static/assets/zonaoutlet/dropdown/css/style.css">
+  <link rel="stylesheet" href="../../static/assets/zonaoutlet/theme/css/style.css">
+  <link rel="stylesheet" href="../../static/assets/zonaoutlet/gallery/style.css">
+  <link rel="preload" as="style" href="../../static/assets/zonaoutlet/mobirise/css/mbr-additional.css">
+  <link rel="stylesheet" href="../../static/assets/zonaoutlet/mobirise/css/mbr-additional.css" type="text/css">
+  
+</head>
+<body>
+  <section class="extMenu1 menu cid-s7iTAFcYse" once="menu" id="extMenu7-9">
+    <nav class="navbar navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
+        <div class="menu-content-top" id="topLine">
+            <div class="menu-logo">
+                <div class="navbar-brand">
+                    <span class="navbar-logo">
+                        <a href="#">
+                            <img src="../../static/assets/zonaoutlet/images/captura-de-pantalla-2020-08-10-a-las-18.29.58.png" alt="zona_outlet" title="" style="height: 3.8rem;">
+                        </a>
+                    </span>
+                    
+                </div>
+            </div>
+            <div class="menu-content-right">
+                <div class="info-widget">
+                    <span class="widget-icon mbri-mobile2 mbr-iconfont"></span>
+                    <div class="widget-content display-4">
+                        <p class="widget-title mbr-fonts-style display-4">+ 56 9 9999 9999</p>
+                        <p class="widget-text mbr-fonts-style display-4">Whatsapp</p>
+                    </div>
+                </div>
+                <div class="info-widget">
+                    <span class="widget-icon mbri-clock mbr-iconfont"></span>
+                    <div class="widget-content display-4">
+                        <p class="widget-title mbr-fonts-style display-4">Lun - Vier: 9:00AM - 5:00PM</p>
+                        <p class="widget-text mbr-fonts-style display-4">Sat - Sun: Closed</p>
+                    </div>
+                </div>
+                
+            </div>
+            <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent, #topLine" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+        <div class="menu-bottom">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-dropdown js-float-line nav-right" data-app-modern-menu="true"><li class="nav-item">
+                        <a class="nav-link link mbr-black display-4" href="../">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link mbr-black display-4" href="../nosotros">Sobre nosotros</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link link text-black dropdown-toggle display-4" href="../productos" data-toggle="dropdown-submenu" aria-expanded="false">Productos</a>
+                        {% block ddlcategoria %}
+                        {% endblock %}                        
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link mbr-black display-4" href="../#extForm17-o">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link mbr-black display-4" href="../carrito">
+                            <span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn" style="size: 40px"></span>&nbsp; CARRITO {% if request.session.Cantidad %}({{request.session.Cantidad}}){% else %}(0){% endif %}
+                        </a>
+                    </li>
+                </ul>
+                
+            </div>
+        </div>
+    </nav>
+</section>
+
+
+{% block content %}
+
+{% endblock %}
+    
+
+
+
+
+  <script src="../../static/assets/zonaoutlet/web/assets/jquery/jquery.min.js"></script>
+  <script src="../../static/assets/zonaoutlet/popper/popper.min.js"></script>
+  <script src="../../static/assets/zonaoutlet/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../../static/assets/zonaoutlet/smoothscroll/smooth-scroll.js"></script>
+  <script src="../../static/assets/zonaoutlet/ytplayer/jquery.mb.ytplayer.min.js"></script>
+  <script src="../../static/assets/zonaoutlet/vimeoplayer/jquery.mb.vimeo_player.js"></script>
+  <script src="../../static/assets/zonaoutlet/bootstrapcarouselswipe/bootstrap-carousel-swipe.js"></script>
+  <script src="../../static/assets/zonaoutlet/tether/tether.min.js"></script>
+  <script src="../../static/assets/zonaoutlet/masonry/masonry.pkgd.min.js"></script>
+  <script src="../../static/assets/zonaoutlet/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="../../static/assets/zonaoutlet/touchswipe/jquery.touch-swipe.min.js"></script>
+  <script src="../../static/assets/zonaoutlet/formstyler/jquery.formstyler.js"></script>
+  <script src="../../static/assets/zonaoutlet/formstyler/jquery.formstyler.min.js"></script>
+  <script src="../../static/assets/zonaoutlet/dropdown/js/nav-dropdown.js"></script>
+  <script src="../../static/assets/zonaoutlet/dropdown/js/navbar-dropdown.js"></script>
+  <script src="../../static/assets/zonaoutlet/theme/js/script.js"></script>
+  <script src="../../static/assets/zonaoutlet/gallery/player.min.js"></script>
+  <script src="../../static/assets/zonaoutlet/gallery/script.js"></script>
+  <script src="../../static/assets/zonaoutlet/slidervideo/script.js"></script>
+  <script src="../../static/assets/zonaoutlet/formoid/formoid.min.js"></script>
+  
+  
+ <div id="scrollToTop" class="scrollToTop mbr-arrow-up"><a style="text-align: center;"
+ ><i class="mbr-arrow-up-icon mbr-arrow-up-icon-cm cm-icon cm-icon-smallarrow-up"></i></a></div>
+  
+</body>
+</html>

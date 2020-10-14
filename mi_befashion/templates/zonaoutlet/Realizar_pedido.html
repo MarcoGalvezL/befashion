@@ -1,0 +1,62 @@
+{% extends "zonaoutlet/base.html" %}
+
+{% block ddlcategoria %}
+<div class="dropdown-menu">
+    <a class="text-black dropdown-item display-4"  href="../productos">Todo<br></a>
+    {% for c in categorias %}
+        <a class="text-black dropdown-item display-4"  href="../productos?id={{c.idcategoria}}">{{c.nombre}}<br></a>
+    {% endfor %}        
+</div>
+{% endblock %}
+
+
+{% block content %}
+<section class="mbr-section extForm cid-s7CMEiDN0t" id="extForm3-t">
+    <div class="container">
+        <div class="media-container-row">
+            <div class="col-md-10 col-lg-8 block-content">
+                <div>
+                        
+                        <div class="dragArea form-row">
+                            <div class="col-md-12">
+                                <h2 class="mbr-fonts-style mbr-fonts-style mb-4 display-2">Realizar tu pedido</h2>
+                            </div>
+                           {% comment %} <div class="col-md-12">
+                                <h3 class="mbr-fonts-style mbr-section-subtitle mbr-fonts-style mb-4 mbr-light display-5">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                    tempor incididunt ut labore et dolore magna aliqua. 
+                            </div>   {% endcomment %}
+                            {% comment %} <div data-for="name" class="col-md-12  form-group">
+                                <input type="text" name="name" placeholder="Your Name" data-form-field="Name" class="form-control input display-7" required="required" >
+                            </div>
+                            <div data-for="email" class="col-md-12  form-group">
+                                <input type="text" name="email" placeholder="Email" data-form-field="Email" class="form-control input display-7" required="required" >
+                            </div>
+                            <div data-for="email" class="col-md-12  form-group">
+                                <input type="text" name="email" placeholder="Telefono" data-form-field="Email" class="form-control input display-7" required="required" >
+                            </div>
+                            <div class="col-md-12  form-group" data-for="message">
+                                <textarea type="textarea" name="message" placeholder="Notas" data-form-field="Message" class="form-control input display-7"></textarea>
+                            </div>
+                            <div class="col-md-12 input-group-btn mt-2">
+                              <button type="submit" class="btn btn-form btn-bgr btn-secondary display-4">SEND MESSAGE</button>
+                            </div>   {% endcomment %}
+                            <div class="col-md-12 input-group-btn mt-2">
+                                <form action='../realizar_pedido2/' method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {{form.as_table}}
+
+                                    <div class="col-md-12 input-group-btn mt-2">
+                                        <button type="submit" class="btn btn-form btn-bgr btn-secondary display-4">Pagar</button>
+                                    </div> 
+                                    {% comment %} <button class="btn btn-success" type="submit" value="buscador">Pagar</button> {% endcomment %}
+                                </form>
+                             </div>  
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

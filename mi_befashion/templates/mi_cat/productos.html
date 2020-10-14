@@ -1,0 +1,84 @@
+{% extends "mi_cat/base.html" %}
+
+{% block head %}
+
+<link rel="shortcut icon" href="../../static/assets/images/cat-pipol-trans.png" type="image/x-icon">
+<title>Cat People</title>
+<meta name="description" content="">
+
+{% endblock %}
+{% block content %}
+
+<section class="mbr-section content4 cid-s6P75pe1st" id="content4-u" style="padding-top: 150px">
+
+    <div class="container">
+        <div class="media-container-row">
+            <div class="title col-12 col-md-8">
+                <h2 class="align-center pb-3 mbr-fonts-style display-1">Productos</h2>
+                <h3 class="mbr-section-subtitle align-center mbr-light mbr-fonts-style display-5">
+                    Shape your future web project with sharp design and refine coded functions.
+                </h3>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mbr-gallery cid-s6P7mJUVXw" once="shops" id="extShop10-v">
+
+    <div>
+        <div class="mbr-shop" card-buttons="" show-sidebar="">
+        	<!-- Shop Gallery -->
+        	<div class="row mbr-shop__row col-md-12">
+        		<div class="wrapper-shop-items col-md-12">
+        			<div class="mbr-gallery-row">
+        				<div>
+        					<div class="shop-items">
+        						{% for c in productos %}
+        						<div class="mbr-gallery-item" data-tags="Increíble" data-slide-to="{{forloop.counter0}}" data-seller="false" data-price="42" data-oldprice="84">
+        							<div class="item_overlay" data-toggle="modal">
+        							</div>
+        							<div class="galleryItem" data-toggle="modal">
+        								<div class="style_overlay"></div>
+	        							<div class="img_wraper">
+	        								<img style="object-fit: cover; object-position: center; height: 300px;" src="{{c.foto.url}}">
+	        							</div>
+	        							<div class="sidebar_wraper">
+	        								<h4 class="item-title mbr-fonts-style mbr-text display-5">{{c.nombre}}</h4>
+	        								<div class="price-block">
+	        									<span class="shop-item-price mbr-fonts-style display-5">{{c.precio}}</span>
+	        								</div>
+	        								<div class="card-description">
+	        									{{c.descripcion}}
+	        								</div>
+	        								<div class="mbr-section-btn" buttons="0" style="display: none;">
+	        									<a class="btn btn-secondary display-7" href="../item/?id={{c.idproducto}}" style="font-size:25px">Ver Más
+	        									</a>
+	        								</div>
+	        							</div>
+	        						</div>
+	        					</div>
+	        					{% endfor %}
+	        				</div>
+	        			</div>
+	        			<div class="clearfix"></div>
+	        		</div>
+	        	</div>
+	        </div><!-- Lightbox -->
+	        <div class="shopItemsModal_wraper" style="z-index: 2500;">
+	        	<div class="shopItemsModalBg"></div>
+	        	<div class="shopItemsModal row">
+	        		<div class="col-md-6 image-modal"></div>
+	        		<div class="col-md-6 text-modal"></div>
+	        		<div class="closeModal">
+	        			<div class="close-modal-wrapper"></div>
+	        		</div>
+	        	</div>
+	        </div>
+	    </div>
+    </div>
+
+</section>
+
+
+{% endblock %}

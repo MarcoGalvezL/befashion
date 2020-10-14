@@ -1,0 +1,47 @@
+{% extends "befashion/Base.html" %}
+
+{% block content %}
+<br/>
+<br/>
+<br/>
+<section class="mbr-section content4 cid-s9gAS47hVx" id="content4-x" style="padding-top: 40px">
+    <div class="container">
+        <div class="media-container-row">
+            <div class="title col-12 col-md-8">
+                <h2 class="align-center pb-3 mbr-fonts-style display-1">
+                	<strong>Olvide mi contraseña de Befashion</strong>
+                </h2>
+                <h3 class="mbr-section-subtitle align-center mbr-light mbr-fonts-style display-5">
+                	Completa el formulario para restablecer tu contraseña
+                </h3>
+                <br/>
+            </div>
+        </div>
+    </div>
+</section>
+<br/>
+<section class="features3 cid-s9gAS47hVx" id="content8-1q">
+    <div class="container">
+        <div class="media-container-row title">
+            <div class="col-12 col-md-8">
+                <h3 class="mbr-section-subtitle align-center mbr-fonts-style display-5">
+                    Enviaremos un mail con una nueva contraseña temporal a tu correo, con esta contraseña puedes ingresar al portal y cambiarla.
+                </h3>
+                <div class="mbr-section-btn align-center">
+                    <form action='../forgot2/' method="post" enctype="multipart/form-data">
+                    	{% csrf_token %}
+                        <div class="form-group">
+                            <span class="mbr-iconfont mobi-mbri-phone mobi-mbri" for="phone-extForm25-6"></span>
+                            <input type="email" name="email" placeholder="Email" class="form-control display-7" required="">
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-info display-4">Restablecer contraseña</button>
+                    </form>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

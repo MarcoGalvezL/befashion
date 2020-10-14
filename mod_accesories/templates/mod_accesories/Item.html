@@ -1,0 +1,209 @@
+{% extends "mod_accesories/Base.html" %}
+{% block content %}
+<style type="text/css">
+   @media screen and (min-width: 600px) {
+   section.hide {
+   display: none;
+   }
+   section.mobi {
+   padding-top: 75px; 
+   }
+   }
+</style>
+<script type="text/javascript">
+   function myFunction() {
+     var x = document.getElementById('extForm6-3e');
+     if (x.style.display === 'none') {
+       x.style.display = 'block';
+     } else {
+       x.style.display = 'none';
+     }
+   }
+</script>
+<div class="container" style="margin: 0px; margin-left: 0px; max-width: 10000px">
+   <section class="mbr-section content11 cid-s8PekU0Uoa hide" style="padding-top: 80px; padding-bottom: 0px; max-height: 400px">
+      <div class="container">
+         <h1 class="mbr-section-title mbr-regular pb-3 mbr-fonts-style display-2">Detalle del producto</h1>
+      </div>
+   </section>
+   <div class="row">
+      <div class="col-md-6 col-12">
+         <section class="extGallery testimonials-slider cid-sahHG88XIp mobi" data-interval="false" id="extGallery6-3o">
+            <div class="main container">
+               <div class="row justify-content-center">
+                  <div class="carousel slide slides" role="listbox" data-pause="true" data-keyboard="false" data-ride="carousel" data-interval="5000">
+                     <ol class="carousel-indicators">
+                        <li class="li1" data-slide-to="0" style="background-image: url({{producto.foto.url}});"></li>
+                        {% if producto.foto2 != "" %}
+                        <li class="li1" data-slide-to="0" style="background-image: url({{producto.foto2.url}});"></li>
+                        {% endif %}
+                        {% if producto.foto3 != "" %}
+                        <li class="li1" data-slide-to="0" style="background-image: url({{producto.foto3.url}});"></li>
+                        {% endif %}
+                     </ol>
+                     <div class="carousel-inner">
+
+                        <div class="carousel-item ">
+                           <div class="media-container-row">
+                              <div class="col-md-12">
+                                 <div class="row justify-content-center">
+                                    <div class="col-md-6">
+                                       <div class="text-box align-left">
+                                       </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                       <div class="text-box align-right">
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="wrap-img " style="background-image: url({{producto.foto.url}});">
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        {% if producto.foto2 != "" %}
+                        <div class="carousel-item ">
+                           <div class="media-container-row">
+                              <div class="col-md-12">
+                                 <div class="row justify-content-center">
+                                    <div class="col-md-6">
+                                       <div class="text-box align-left">
+                                       </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                       <div class="text-box align-right">
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="wrap-img " style="background-image: url({{producto.foto2.url}});">
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        {% endif %}
+                        {% if producto.foto3 != "" %}
+                        <div class="carousel-item ">
+                           <div class="media-container-row">
+                              <div class="col-md-12">
+                                 <div class="row justify-content-center">
+                                    <div class="col-md-6">
+                                       <div class="text-box align-left">
+                                       </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                       <div class="text-box align-right">
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="wrap-img " style="background-image: url({{producto.foto3.url}});">
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        {% endif %}
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+      </div>
+      <div class="col-md-6 col-12">
+         <section class="extFeatures cid-sahHPiiCOB" id="extFeatures62-3p">
+            <div class="container">
+               <form id="sendsubmit" action="/add_carrito/" method="POST" class="mbr-form form-with-styler" >
+                  {% csrf_token %}
+                  <h1 class="mbr-section-title mbr-regular pb-3 mbr-fonts-style display-2">{{producto.nombre}}</h1>
+                  <p class="mbr-text align-left mbr-light pb-4 mbr-fonts-style display-7">
+                     {{producto.descripcion | linebreaks}}
+                  </p>
+                  <h3 class="newPrice mbr-bold mbr-fonts-style display-5">
+                     {% if producto.promocion is True or producto.preventa is True %}
+                        ${{producto.precio_promocion}} <span class="oldprice mbr-fonts-style display-7" >${{producto.precio}}</span>
+                     {% else %}
+                        ${{producto.precio}}
+                     {% endif %}
+                  </h3>
+                  <br>
+                  <div class="col-md-6 col-6" style="margin: 0px; padding-left: 0px;">
+                     <input type="number" name="cantidad" class="form-control sm" placeholder="Cantidad"  required="required">
+                  </div>
+                  <br>
+                  <div class="col-md-6 col-6" style="margin: 0px; padding-left: 0px;">
+                     <select class="form-control input display-7" required="required" name="talla" id="exampleFormControlSelect1">
+                        {% for c in producto.tallas.all %}
+                           <option> {{c.nombre}} </option>
+                        {% endfor %}
+                    </select>
+                  </div>  
+                  <input type="hidden" name="producto" value={{producto.idproducto}}>   
+                  <input type="hidden" name="url" value="Accesories">          
+                  <br>
+                  <button type="submit"  class="btn btn-sm btn-black-outline display-4"><span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>Añadir al carrito</button>
+                  <!--<a class="btn btn-sm btn-black-outline display-4" href="#"><span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>Añadir al carrito</a>-->
+               </form>
+            </div>
+         </section>
+      </div>
+   </div>
+</div>
+<section class="mbr-section extFeatures cid-sahI68tjVd" id="extShop9-3q">
+   <div class="container-fluid">
+      <h2 class="mbr-section-title align-left mbr-fonts-style mbr-white display-2">Otros productos recomendados</h2>
+      <div class="row justify-content-center pt-5">
+       
+     
+         {% for c in producto_recomendado %}
+         <div class="card px-3 py-4 col-12 col-md-6 col-lg-3">
+            <div class="card-wrapper">
+               <div class="card-img">
+                  <img src="{{c.foto.url}}" alt="Mobirise">
+               </div>
+               <div class="card-box">
+                  <p class="mbr-text mbr-fonts-style align-center mbr-white display-5">
+                     {{c.nombre}}
+                  </p>
+                  <div class="prices align-center">
+                     <span class="newPrice mbr-bold mbr-fonts-style display-5">
+                        {% if c.promocion is True or c.prventa is True %}
+                           ${{c.precio_promocion}} <span class="oldPrice mbr-fonts-style display-7" >${{c.precio}}</span>
+                        {% else %}
+                           ${{c.precio}}
+                        {% endif %}
+                     </span>
+                  </div>
+                  <div class="mbr-section-btn align-center pt-3">
+                     <!-- <a href="#" class="btn btn-md btn-black-outline display-4"><span class="mbri-cart-add mbr-iconfont mbr-iconfont-btn" style="font-size: 25px;"></span>Añadir al carrito</a> -->
+                     <a href="../../../Accesories/item/{{c.slug}}/" class="btn btn-md btn-success display-4"><span class="mbri-search mbr-iconfont mbr-iconfont-btn" style="font-size: 25px;"></span>Ver más</a>        
+                  </div>
+               </div>
+            </div>
+         </div>
+         {% endfor %} 
+        
+
+
+      </div>
+   </div>
+</section>
+<section class="extСontent cid-sahJ6bDRB5 mbr-parallax-background" id="extContent5-3s">
+   <div class="mbr-overlay" style="opacity: 0.8; background-color: rgb(51, 51, 51);">
+   </div>
+   <div class="container">
+      <div class="row">
+         <div class="col-lg-7 col-md-12">
+            <div class="content-wrapper align-left">
+               <h1 class="mbr-section-title mbr-semibold mbr-white pb-4 mbr-fonts-style display-1">Productos</h1>
+            </div>
+         </div>
+         <div class="col-lg-4 col-md-6 col-12">
+            <div class="content-wrapper align-left">
+               <p class="mbr-text mbr-white mbr-regular mbr-white mbr-fonts-style pt-4 display-7">Descubre más productos....</p>
+               <div class="mbr-section-btn pt-4"><a class="btn btn-lg btn-success display-5" href="#"><span class="mobi-mbri mobi-mbri-right mbr-iconfont mbr-iconfont-btn"></span>Volver a productos</a></div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+{% endblock %}
+{% block script %}
+{% endblock %}

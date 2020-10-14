@@ -1,0 +1,132 @@
+{% extends "zonaoutlet/base.html" %}
+
+{% block ddlcategoria %}
+<div class="dropdown-menu">
+    <a class="text-black dropdown-item display-4"  href="../productos">Todo<br></a>
+    {% for c in categorias %}
+        <a class="text-black dropdown-item display-4"  href="../productos?id={{c.idcategoria}}">{{c.nombre}}<br></a>
+    {% endfor %}        
+</div>
+{% endblock %}
+                  
+{% block content %}                
+
+<section class="extGallery testimonials-slider cid-s7CDHvcMbh" data-interval="false" id="extGallery6-k">
+<form action="../add_carrito/" method="POST" class="mbr-form form-with-styler" >
+{% csrf_token %}
+<input type="hidden" name="producto" value={{producto.idproducto}}>
+
+    <div class="main container">
+        <div class="media-container-row">
+            <div class="col-md-12">
+                <div class="row justify-content-center" style="padding: 50px; padding-top: 10px;padding-bottom: 10px ">
+                    <div class="col-md-8">
+                        <div class="text-box align-left">
+                            <h4 class="card-title1 mbr-fonts-style mbr-normal display-2">{{producto.nombre}}</h4>
+                        <div class="ico-box">
+                            <button type="submit"  class="btn btn-secondary-outline display-4"><span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>AÑADIR AL CARRITO</button>                
+                            {% comment %} <a class="btn btn-secondary-outline display-4" href="#">AÑADIR AL CARRITO</a> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-box align-right">
+                        <h4 class="card-title2 mbr-fonts-style mbr-normal display-2">{{producto.precio}}</h4>
+                        <p class="mbr-text mbr-fonts-style sq mbr-normal display-5">{{producto.precio_ref}}</p>
+                    </div>
+                </div>
+            </div>
+
+
+        <div class="row justify-content-center">
+
+            <div class="second-col col-md-10">
+                <div class="carousel slide slides" role="listbox" data-pause="true" data-keyboard="false" data-ride="carousel" data-interval="10000">
+                    <ol class="carousel-indicators">
+                        <li class="li1" data-slide-to="0" style="background-image: url({{producto.foto.url}})"></li>
+                        <li class="li2" data-slide-to="1" style="background-image: url({{producto.foto2.url}})"></li>
+                        <li class="li3" data-slide-to="2" style="background-image: url({{producto.foto3.url}})"></li>
+
+                    </ol>
+                    <div class="carousel-inner">
+                        
+                    <div class="carousel-item ">
+                            <div class="media-container-row">
+                                <div class="col-md-12">
+
+                                    <div class="row justify-content-center">
+                                    
+                                    </div>
+
+                                    <div class="wrap-img" style="background-image: url({{producto.foto.url}})">
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="carousel-item ">
+                            <div class="media-container-row">
+                                <div class="col-md-12">
+
+                                    <div class="row justify-content-center">
+                                    
+                                    </div>
+
+                                    <div class="wrap-img " style="background-image: url({{producto.foto2.url}})">
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                
+                    <div class="carousel-item ">
+                            <div class="media-container-row">
+                                <div class="col-md-12">
+
+                                    <div class="row justify-content-center">
+                                    
+                                        
+                                    </div>
+
+                                    <div class="wrap-img " style="background-image: url({{producto.foto3.url}})">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mbr-section article content1 cid-s7CEy9u1l2" id="content1-l" style="padding-top: 8px">
+
+    <div class="container">
+        <div class="media-container-row">
+            <div class="mbr-text col-12 mbr-fonts-style display-7 col-md-10">
+                <h4 class="card-title1 mbr-fonts-style mbr-normal display-2">DESCRIPCION DEL PRODUCTO</h4>
+                <p>
+                    {{producto.descripcion}}
+                </p>
+                 
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mbr-section content8 cid-s7CED0SVkC" id="content8-m">
+
+    
+
+    <div class="container">
+        <div class="media-container-row title">
+            <div class="col-12 col-md-8">
+                <div class="mbr-section-btn align-center">               
+                <button type="submit"  class="btn btn-secondary display-4"><span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>AÑADIR AL CARRITO</button>                
+                {% comment %} <a class="btn btn-secondary display-4" href="#"><span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>AÑADIR AL CARRITO</a> {% endcomment %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</form>
+{% endblock %}

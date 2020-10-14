@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html >
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  
+  {% block head %}
+
+  {% endblock %}
+  <link rel="stylesheet" href="../../static/assets/mi_cat/web/assets/mobirise-icons-bold/mobirise-icons-bold.css">
+  <link rel="stylesheet" href="../../static/assets/mi_cat/web/assets/mobirise-icons/mobirise-icons.css">
+  <link rel="stylesheet" href="../../static/assets/mi_cat/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../static/assets/mi_cat/bootstrap/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="../../static/assets/mi_cat/bootstrap/css/bootstrap-reboot.min.css">
+  <link rel="stylesheet" href="../../static/assets/mi_cat/dropdown/css/style.css">
+  <link rel="stylesheet" href="../../static/assets/mi_cat/tether/tether.min.css">
+  <link rel="stylesheet" href="../../static/assets/mi_cat/socicon/css/styles.css">
+  <link rel="stylesheet" href="../../static/assets/mi_cat/theme/css/style.css">
+  <link rel="stylesheet" href="../../static/assets/mi_cat/gallery/style.css">
+  <link rel="preload" as="style" href="../../static/assets/mi_cat/mobirise/css/mbr-additional.css">
+  <link rel="stylesheet" href="../../static/assets/mi_cat/mobirise/css/mbr-additional.css" type="text/css">
+</head>
+
+<body>
+  <section class="extMenu12 menu popup-btn-cards cid-s6OM1rI8F1" once="menu" id="extMenu13-1" data-sortbtn="btn-primary">
+
+    <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
+        <div class="mbr-overlay" style="opacity: 1;"></div>
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            
+        <div class="left-menu">
+          <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+          	<li class="nav-item">
+                  <a class="nav-link link text-danger display-4" href="#"><span class="socicon socicon-whatsapp mbr-iconfont mbr-iconfont-btn"></span>Contactanos</a>
+              </li><li class="nav-item">
+                  <a class="nav-link link text-danger display-4" href="../#content4-8"><span class="mbrib-star mbr-iconfont mbr-iconfont-btn"></span>Destacados</a>
+              </li></ul>
+        </div>
+
+        <div class="brand-container">
+          <div class="navbar-brand">
+              <span class="navbar-logo">
+                  <a href="../">
+                      <img src="../../static/assets/mi_cat/images/cat-pipol-trans.png" alt="Cat" title="" style="height: 6rem;">
+                  </a>
+              </span>
+              
+          </div>
+        </div>
+
+        <div class="right-menu">
+          <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true"><li class="nav-item">
+                <a class="nav-link link text-white display-4" href="../productos"><span class="mbrib-features mbr-iconfont mbr-iconfont-btn"></span>Productos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link link text-white display-4" href="../sobre_nosotros"><span class="mbrib-hearth mbr-iconfont mbr-iconfont-btn"></span>Sobre Nosotros</a>
+            </li><li class="nav-item"><a class="nav-link link text-white display-4" href="../../carrito"><span class="mbrib-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>Carrito {% if request.session.Cantidad %}({{request.session.Cantidad}}){% else %}(0){% endif %}</a></li></ul>
+        </div>
+      </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+          </button>
+    </nav>
+</section>
+
+{% block content %}
+
+{% endblock %}
+
+<section class="extFooter cid-s6OWiH41PX" id="extFooter8-h" data-sortbtn="btn-primary">
+    
+       <div class="container text-center">
+            <div class="col-md-12 col-sm-12">
+              <h1 class="plan-title mbr-section-title mbr-fonts-style display-2">Cat People</h1>
+            </div>
+            <div class="social-media col-md-12 col-sm-12">
+                <ul>
+                    <li>
+                      <a class="icon-transition" href="#">
+                        <span class="mbr-iconfont socicon-facebook socicon"></span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="icon-transition" href="#">
+                        <span class="mbr-iconfont socicon-instagram socicon"></span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="icon-transition" href="#">
+                        <span class="mbr-iconfont socicon-whatsapp socicon"></span>
+                      </a>
+                    </li>
+                    
+                    
+                 </ul>
+            </div>
+            <div class="row justify-content-center">
+                <ul class="foot-menu">
+                  <li class="foot-menu-item mbr-fonts-style display-7">
+                        <a href="#" class="text-white">
+                            HOME
+                        </a>
+                    </li>
+                  <li class="foot-menu-item mbr-fonts-style display-7">
+                        <a href="#" class="text-white">
+                            PRODUCTOS
+                        </a>
+                        <div class="rhombus"></div>
+                    </li>
+                  <li class="foot-menu-item mbr-fonts-style display-7">
+                        <a href="#" class="text-white">
+                            DESTACADOS
+                        </a>
+                        <div class="rhombus"></div>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <p class="footer-text col-md-12 col-sm-12 mbr-fonts-style mbr-text display-7">Desarrollado por <a href="https://www.sbpymes.com" class="text-secondary">SBPYMES.CL</a></p>
+            </div>
+       </div>
+
+</section>
+
+
+  <script src="../../static/assets/mi_cat/web/assets/jquery/jquery.min.js"></script>
+  <script src="../../static/assets/mi_cat/popper/popper.min.js"></script>
+  <script src="../../static/assets/mi_cat/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../../static/assets/mi_cat/smoothscroll/smooth-scroll.js"></script>
+  <script src="../../static/assets/mi_cat/dropdown/js/nav-dropdown.js"></script>
+  <script src="../../static/assets/mi_cat/dropdown/js/navbar-dropdown.js"></script>
+  <script src="../../static/assets/mi_cat/touchswipe/jquery.touch-swipe.min.js"></script>
+  <script src="../../static/assets/mi_cat/tether/tether.min.js"></script>
+  <script src="../../static/assets/mi_cat/parallax/jarallax.min.js"></script>
+  <script src="../../static/assets/mi_cat/masonry/masonry.pkgd.min.js"></script>
+  <script src="../../static/assets/mi_cat/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="../../static/assets/mi_cat/bootstrapcarouselswipe/bootstrap-carousel-swipe.js"></script>
+  <script src="../../static/assets/mi_cat/vimeoplayer/jquery.mb.vimeo_player.js"></script>
+  <script src="../../static/assets/mi_cat/sociallikes/social-likes.js"></script>
+  <script src="../../static/assets/mi_cat/theme/js/script.js"></script>
+  <script src="../../static/assets/mi_cat/slidervideo/script.js"></script>
+  <script src="../../static/assets/mi_cat/gallery/player.min.js"></script>
+  <script src="../../static/assets/mi_cat/gallery/script.js"></script>
+  <script src="../../static/assets/mi_cat/mobirise-shop/script.js"></script>
+  
+  
+
+</body>
+</html>

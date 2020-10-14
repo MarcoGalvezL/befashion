@@ -1,0 +1,92 @@
+{% extends "befashion/Base.html" %}
+
+
+{% block content %}
+
+{% if user.is_authenticated %}
+</br>
+</br>
+</br>
+</br>
+<section class="mbr-section content4 cid-s9gAS47hVx" id="content4-x" style="padding-top: 40px;">
+    <div class="container">
+        <div class="media-container-row">
+            <div class="title col-12 col-md-8">
+                <h2 class="align-center pb-3 mbr-fonts-style display-1">
+                	<strong>Cambia tu contraseña de Befashion</strong>
+                </h2>
+                <h3 class="mbr-section-subtitle align-center mbr-light mbr-fonts-style display-5">
+                	Completa el formulario para cambiar tu contraseña
+                </h3>
+                </br>
+                </br>
+            </div>
+        </div>
+    </div>
+</section>
+</br>
+<section class="mbr-section content8 cid-s9gAS47hVx" id="content8-1q">
+    <div class="container">
+        <div class="media-container-row title">
+            <div class="col-12 col-md-8">
+                <div class="mbr-section-btn align-center">
+                    <form action='../change_pass/' method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="dragArea form-row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                <span class="mbr-iconfont mobi-mbri-phone mobi-mbri" for="phone-extForm25-6"></span>
+                                <input type="password" id="password" name="password" placeholder="Nueva Contraseña" class="form-control display-7" required="">
+                            </div>
+                        </div>
+                        <div class="dragArea form-row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                <span class="mbr-iconfont mobi-mbri-phone mobi-mbri" for="phone-extForm25-6"></span>
+                                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmar nueva contraseña" class="form-control display-7" required="">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-info display-4">Cambiar contraseña</button>
+                    </form>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% else %}
+<section class="mbr-section content4 cid-rZ2zE9yw0v" id="content4-x" style="padding-top: 40px">
+    <div class="container">
+        <div class="media-container-row">
+            <div class="title col-12 col-md-8">
+                <h2 class="align-center pb-3 mbr-fonts-style display-1">
+                	<strong>Usted no se identificado aun</strong>
+                </h2>
+                <h3 class="mbr-section-subtitle align-center mbr-light mbr-fonts-style display-5">
+                	Ingrese primero para cambiar su contraseña, si no la recuerda utilice nuestra opcion "olvide mi contraseña"
+                </h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+{% endif %}
+<script type="text/javascript">
+	var password = document.getElementById("password")
+  , confirm_password = document.getElementById("confirm_password");
+
+	function validatePassword(){
+	  if(password.value != confirm_password.value) {
+	    confirm_password.setCustomValidity("Passwords Don't Match");
+	  } else {
+	    confirm_password.setCustomValidity('');
+	  }
+	}
+
+	password.onchange = validatePassword;
+	confirm_password.onkeyup = validatePassword;
+</script>
+
+
+{% endblock %}

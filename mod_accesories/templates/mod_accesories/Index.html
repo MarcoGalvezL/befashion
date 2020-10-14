@@ -1,0 +1,382 @@
+{% extends "mod_accesories/Base.html" %}
+
+
+{% block content %}
+<script type="text/javascript">
+function myFunction() {
+  var x = document.getElementById('extForm6-3e');
+  if (x.style.display === 'none') {
+    x.style.display = 'block';
+  } else {
+    x.style.display = 'none';
+  }
+}
+</script>
+
+<section class="carousel slide cid-s8CGfCz6hb" data-interval="false" id="slider2-6" data-sortbtn="btn-primary">
+
+    
+    <div class="container-fluid content-slider">
+        <div class="content-slider-wrap">
+            <div>
+                <div class="mbr-slider slide carousel" data-keyboard="false" data-ride="carousel" data-interval="4000" data-pause="hover">
+                    <ol class="carousel-indicators">
+                        <li data-app-prevent-settings="" data-target="#slider2-6" data-slide-to="0"></li>
+                        <li data-app-prevent-settings="" data-target="#slider2-6" class=" active" data-slide-to="1"></li>
+                        <li data-app-prevent-settings="" data-target="#slider2-6" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner" role="listbox">
+                        <div class="carousel-item slider-fullscreen-image" data-bg-video-slide="false" style="background-image: url(../../static/assets/befashion/images/mbr-1920x1279.jpg);">
+                            <div class="container container-slide">
+                                <div class="image_wrapper">
+                                    <div class="mbr-overlay" style="background-color: #c18168 "></div>
+                                    <img src="../../static/assets/befashion/images/mbr-1920x1279.jpg" alt="" title="">
+                                    <div class="carousel-caption justify-content-center">
+                                        <div class="col-10 align-center">
+                                            <h2 class="mbr-fonts-style display-1"><strong>Titulo de la promoción</strong>
+                                            </h2>
+                                            <p class="lead mbr-text mbr-fonts-style display-5"><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod<br>        tempor incididunt ut labore et dolore magna aliqua.<br>
+                                            </p>
+                                            <div class="mbr-section-btn" buttons="0">
+                                                <a class="btn display-4 btn-primary" href="#">PARA</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item slider-fullscreen-image active" data-bg-video-slide="false" style="background-image: url(../../static/assets/befashion/images/mbr-8-1920x1280.jpg);">
+                            <div class="container container-slide">
+                                <div class="image_wrapper">
+                                    <div class="mbr-overlay" style="background-color: #c18168 "></div>
+                                    <img src="../../static/assets/befashion/images/mbr-8-1920x1280.jpg" alt="" title="">
+                                    <div class="carousel-caption justify-content-center">
+                                        <div class="col-10 align-center">
+                                            <h2 class="mbr-fonts-style display-1">Titulo 34</h2>
+                                            <p class="lead mbr-text mbr-fonts-style display-5"><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod<br>tempor incididunt ut labore et dolore magna aliqua.<br>
+                                            </p>
+                                            <div class="mbr-section-btn" buttons="0">
+                                                <a class="btn display-4 btn-primary" href="#">PARA</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item slider-fullscreen-image" data-bg-video-slide="false" style="background-image: url(../../static/assets/befashion/images/mbr-1920x1325.jpg);">
+                            <div class="container container-slide">
+                                <div class="image_wrapper">
+                                    <div class="mbr-overlay" style="background-color: #c18168 "></div>
+                                    <img src="../../static/assets/befashion/images/mbr-1920x1325.jpg" alt="" title="">
+                                    <div class="carousel-caption justify-content-center">
+                                        <div class="col-10 align-center">
+                                            <h2 class="mbr-fonts-style display-1">Titulo de promoción</h2>
+                                            <p class="lead mbr-text mbr-fonts-style display-5"><br>Jumbotrons,  hero images, desplazamiento con paralaje, fondos con videos, menú de hamburguesa, encabezado fijo y más.</p>
+                                            <div class="mbr-section-btn" buttons="0">
+                                                <a class="btn display-4 btn-primary" href="#">BUY NOW</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a data-app-prevent-settings="" class="carousel-control carousel-control-prev" role="button" data-slide="prev" href="#slider2-6">
+                        <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a data-app-prevent-settings="" class="carousel-control carousel-control-next" role="button" data-slide="next" href="#slider2-6">
+                        <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div> 
+        </div>
+    </div>
+</section>
+
+<section class="extClients clients cid-s8PPIogVMz" data-interval="false" id="extClients3-14" data-sortbtn="btn-primary">
+     
+    <div class="container">
+        <div class="carousel slide" role="listbox" data-pause="true" data-keyboard="false" data-ride="carousel" data-interval="3000">
+            <div class="slider-clients">
+                <div class="carousel-inner" data-visible="5">                     
+
+                    {% for c in marcas %}
+                     <div class="carousel-item ">
+                        <div class="media-container-row">
+                            <div class="col-md-12">
+                                <div class="wrap-img ">
+                                    <img src="{{c.foto.url}}" class="img-responsive clients-img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+            <div class="carousel-controls">
+                <a data-app-prevent-settings="" class="carousel-control carousel-control-prev" role="button" data-slide="prev">
+                    <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
+                    <span class="sr-only">Previo</span>
+                </a>
+                <a data-app-prevent-settings="" class="carousel-control carousel-control-next" role="button" data-slide="next">
+                    <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
+                    <span class="sr-only">Siguiente</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="features8 cid-s9gZ5r05ZR" id="extFeatures46-2s" data-sortbtn="btn-primary">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="card cardbg col-12 col-md-6 col-lg-3">
+                <div class="card-wrapper text-card">
+
+                    <p class="card-text align-left mbr-fonts-style display-7">Lorem ipsum dolor sit amet, consectetur adipiscing elitdo eiusmod
+                        temporeum dicant partem scripserit. Lorem ipsum dolor sit amet, consec tetur adipiscing elit
+                        adipiscing elitdo.</p>
+
+                </div>
+            </div>
+
+            <div class="card col-12 col-md-6 col-lg-3">
+
+                <div class="card-img">
+                    <img src="../../static/assets/befashion/images/mbr-1920x1325.jpg" alt="#" title="">
+                </div>
+            </div>
+            <div class="card m-auto col-12 col-md-6 col-lg-3">
+                <div class="card-wrapper">
+                    <h4 class="card-title align-left mbr-fonts-style display-2">Be fashion</h4>
+                    <div class="mbr-section-btn"><a href="../../Accesories/productos" class="btn btn-primary display-4">PRODUCTOS</a></div>
+                </div>
+            </div>
+            <div class="card col-12 col-md-6 col-lg-3">
+                <div class="card-img">
+                    <img src="../../static/assets/befashion/images/04.jpg" alt="Mobirise" title="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cid-s9hiCxb8EF" id="content7-35" data-sortbtn="btn-primary">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-6 col-md-8 align-center">
+                <h3 class="mbr-section-subtitle align-center mbr-fonts-style mbr-light pb-3 display-5">PRODUCTOS</h3>
+                <h2 class="mbr-section-title align-center mbr-fonts-style mbr-bold display-2">RECIEN LLEGADOS</h2>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mbr-gallery cid-s9hist291u" id="shop4-34" data-sortbtn="btn-primary">
+    <div>
+        <div class="mbr-shop" card-buttons="">
+            <div class="row mbr-shop__row col-md-12">
+                <div class="wrapper-shop-items col-md-12">
+                    <div class="mbr-gallery-row">
+                        <div>
+                            <div class="shop-items">
+
+                                {% for c in nuevos %}
+                                <div class="mbr-gallery-item" data-slide-to="0" >
+                                    <div class="item_overlay" data-toggle="modal"></div>
+                                    <div class="galleryItem" data-toggle="modal"><div class="style_overlay"></div>
+                                    <div class="img_wraper">
+                                        <img src="{{c.foto.url}}" style="object-fit: cover; object-position: center; height: 300px;"></div>
+                                        <div class="sidebar_wraper">
+                                            <h4 class="item-title mbr-fonts-style mbr-text display-5">"{{c.nombre}}"</h4>
+                                            <div class="price-block">
+                                                <span class="shop-item-price mbr-fonts-style display-5">
+                                                    {% if c.promocion is True or c.preventa is True %}
+                                                       ${{c.precio_promocion}} </span><span class="oldprice mbr-fonts-style display-7" >${{c.precio}}</span>
+                                                    {% else %}
+                                                       ${{c.precio}}
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                            <div class="card-description">
+                                                {{c.descripcion |linebreaks}}
+                                            </div>
+                                            <div class="mbr-section-btn" buttons="0" style="display: none;">
+                                                <!-- <a class="btn btn-sm btn-black-outline display-4" href="#"><span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>Añadir al carrito</a> <br> -->
+                                                <a class="btn btn-sm btn-black-outline display-4" href="../../Accesories/item/{{c.slug}}/">Ver más +</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %} 
+
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="shopItemsModal_wraper" style="z-index: 2500;">
+                <div class="shopItemsModalBg"></div>
+                <div class="shopItemsModal row">
+                    <div class="col-md-6 image-modal"></div>
+                    <div class="col-md-6 text-modal"></div>
+                    <div class="closeModal">
+                        <div class="close-modal-wrapper"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section class="cid-s8CJYeqNQT" id="content7-f" data-sortbtn="btn-primary">
+
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-6 col-md-8 align-center">
+                <h3 class="mbr-section-subtitle align-center mbr-fonts-style mbr-light pb-3 display-2">PRODUCTOS DESTADOS</h3>
+                <h2 class="mbr-section-title align-center mbr-fonts-style mbr-bold display-5">Lorem ipsum dolor sit amet, consectetur adipisicing<br></h2>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mbr-gallery mbr-slider-carousel cid-s9hh5fAsiT" id="extGallery7-2x" data-sortbtn="btn-primary">
+
+    <div class="container" style="max-width: 96%;">
+        <div>
+            <div class="mbr-gallery-row">
+                <div class="mbr-gallery-layout-default">
+                    <div>
+                        <div>
+
+                            {% for c in destacados %}
+                            <div class="mbr-gallery-item mbr-gallery-item--p1" data-video-url="false" data-tags="Increíble">
+                                <div href="#lb-extGallery7-2x" data-slide-to="{{forloop.counter0}}" data-toggle="modal">
+                                    <img src="{{c.foto.url}}" alt="" title="">
+                                    <span class="icon-focus"></span>
+                                    <span class="mbr-gallery-title mbr-fonts-style display-7"><a class="btn btn-sm btn-black-outline display-4" href=../../Accesories/item/{{c.slug}}/>Ver más</a></span>
+                                </div>
+                            </div>
+                            {% endfor %} 
+                            
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div data-app-prevent-settings="" class="mbr-slider modal fade carousel slide" tabindex="-1" data-keyboard="true" data-interval="false" id="lb-extGallery7-2x">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="carousel-inner">
+
+                                {% for c in destacados %}
+                                <div class="carousel-item {% if forloop.first %}active {% endif %}">
+                                    <img src="{{c.foto.url}}" alt="" title="">
+                                </div>
+                                {% endfor %} 
+                                
+                                
+                            </div>
+                            <a class="carousel-control carousel-control-prev" role="button" data-slide="prev" href="#lb-extGallery7-2x">
+                                <span class="mbri-left mbr-iconfont" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control carousel-control-next" role="button" data-slide="next" href="#lb-extGallery7-2x">
+                                <span class="mbri-right mbr-iconfont" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                            <a class="close" href="#" role="button" data-dismiss="modal">
+                                <span class="sr-only">Close</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="extForm cid-sabGVKAbQc" id="extForm9-3f" data-sortbtn="btn-primary">
+
+    
+    <div class="container">
+        
+        
+        
+        <div class="row main-row justify-content-center">
+            <div class="col-md-9 col-lg-6">          
+
+                <div class="form1" style="background-color: rgb(250, 175, 146) ">
+
+
+                    <form action="../../Accesories/contacto/" method="POST" class="mbr-form form-with-styler" >
+                        {% csrf_token %}
+                        <div class="dragArea row">
+                            <div class="col-md-12">
+                                <h3 class="mbr-fonts-style mbr-section-subtitle form-subtitle mbr-fonts-style align-center mbr-white display-5">Esperamos escuchar de ti pronto</h3>
+                            </div>
+                            <div class="col-md-12">
+                                <h2 class="mbr-fonts-style mbr-section-title form-title mbr-fonts-style align-center mbr-white pb-5 display-1">Contacto</h2>
+                            </div>
+                            <div data-for="name" class="col-md-12 form-group ">
+                                <input type="text" name="name" placeholder="Name" data-form-field="Name" class="form-control display-7" required="required" id="name-extForm10-8">
+                            </div>
+                            <div data-for="email" class="col-md-12 form-group ">
+                                <input type="email" name="email" placeholder="Email" data-form-field="Email" class="form-control display-7" required="required" id="email-extForm10-8">
+                            </div>
+                            
+                            <div data-for="message" class="col-md-12 form-group ">
+                                <textarea name="message" placeholder="Message" data-form-field="Message" class="form-control display-7" id="message-extForm10-8"></textarea>
+                            </div>
+                            <div class="col-md-12 input-group-btn">
+                                <button type="submit" class="btn btn-lg btn-form btn-secondary display-4">SEND NOW</button>
+                            </div> 
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-9 media-container-column items-column col-lg-6">
+                <div class="row first-row">
+                    <div class="card col-12 first-card">
+                        <div class="card-wrapper">
+                            <div class="card-img">
+                                <img src="../../static/assets/befashion/images/mbr-8-1920x1280.jpg" alt="Mobirise" title="">
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row second-row">
+                    <div class="card col-md-6 second-card">
+                        <div class="card-wrapper">
+                            <div class="card-img">
+                                <img src="../../static/assets/befashion/images/shop5.jpg" alt="Mobirise" title="">
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="card col-md-6">
+                        <div class="card-wrapper">
+                            <div class="card-img">
+                                <img src="../../static/assets/befashion/images/19.jpg" alt="Mobirise">
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </div>
+</section>
+
+{% endblock %}
+    

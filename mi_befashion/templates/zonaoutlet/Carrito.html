@@ -1,0 +1,83 @@
+{% extends "zonaoutlet/base.html" %}
+
+{% block ddlcategoria %}
+<div class="dropdown-menu">
+    <a class="text-black dropdown-item display-4"  href="../productos">Todo<br></a>
+    {% for c in categorias %}
+        <a class="text-black dropdown-item display-4"  href="../productos?id={{c.idcategoria}}">{{c.nombre}}<br></a>
+    {% endfor %}        
+</div>
+{% endblock %}
+                   
+
+{% block content %}
+<section class="services5 cid-s7CJXh1Fl5" id="services5-p">
+
+    <div class="container">
+        <div class="row">
+            <!--Titles-->
+            <div class="title pb-5 col-12">
+                <h2 class="align-left mbr-fonts-style m-0 display-1">CARRITO</h2>
+                <div class="mbr-section-btn align-left"><a class="btn btn-secondary display-4" href="#">
+                <span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>TERMINAR COMPRA</a></div>
+            </div>
+            <!--Card-1-->
+            {% for c in productos_en_carrito %}
+            <div class="card px-3 col-12">
+                <div class="card-wrapper media-container-row media-container-row">
+                    <div class="card-box">
+                        <div class="top-line pb-3">
+                            <h4 class="card-title mbr-fonts-style display-5">
+                                <a href="../../item/?id={{c.producto_idproducto.idproducto}}"  class="text-secondary"><strong>{{c.producto_idproducto.nombre}} - Cantidad: {{c.cantidad}}</strong></a></h4>
+                            <p class="mbr-text cost mbr-fonts-style m-0 display-5"><strong>$ {{c.subtotal}}
+                            </strong></p>
+                        </div>
+                        <div class="bottom-line">
+                            <p class="mbr-text mbr-fonts-style m-0 b-descr display-7">
+                                {{c.producto_idproducto.descripcion}}
+                                <br>
+                                <form action='../../del_carrito/' method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{alerta}}                                
+                                <input type="hidden" name="eliminar" value={{c.idcarritohasproductos}}>
+                                <button type="submit" style="align-content: center;background-color: transparent; border: none; padding: 0px; color: #f06292;">&times; 
+                                Eliminar</button>
+                                </form> 
+                                 {% comment %} <a href="http://www.sbpymes.com" class="text-secondary">Eliminar</a></p> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+</section>
+<section class="services5 cid-s7CKWHfUa6" id="services5-r">
+    <div class="container">
+        <div class="row">
+            <div class="card px-3 col-12">
+                <div class="card-wrapper media-container-row media-container-row">
+                    <div class="card-box">
+                        <div class="top-line pb-3">
+                            <h4 class="card-title mbr-fonts-style display-2">TOTAL</h4>
+                            <p class="mbr-text cost mbr-fonts-style m-0 display-2" style="font-size: 35px; text-align: right;"><strong>$&nbsp;{{carrito.total}} +Delivery&nbsp;</strong></p>
+                        </div>
+                        <div class="bottom-line">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        <div class="media-container-row title">
+            <div class="col-12 col-md-8">
+                <div class="mbr-section-btn align-center">
+                <a class="btn btn-secondary display-4" href="../realizar_pedido"><span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>TERMINAR COMPRA</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

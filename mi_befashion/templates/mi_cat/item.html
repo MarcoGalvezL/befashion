@@ -1,0 +1,121 @@
+{% extends "mi_cat/base.html" %}
+
+{% block head %}
+
+<link rel="shortcut icon" href="{{producto.foto.url}}" type="image/x-icon">
+<title>{{producto.nombre}}</title>
+<meta name="description" content="{{producto.short}}">
+
+{% endblock %}
+{% block content %}
+
+<section class="services2 cid-s6PgYdQVqX" id="services2-11" style="padding-bottom: 5px; padding-top: 150px">
+
+    <div class="container">
+        <div class="col-md-12">
+            <div class="media-container-row">
+                <div class="mbr-figure" style="width: 50%;">
+                    <img src="{{producto.foto.url}}" alt="Cat People">
+                </div>
+                <div class="align-left aside-content">
+                    <h2 class="mbr-title pt-2 mbr-fonts-style display-2">
+                        {{producto.nombre}}
+                    </h2>
+                    <div class="mbr-section-text">
+                        <p class="mbr-text text1 pt-2 mbr-light mbr-fonts-style display-7" style="font-size: 20px">
+                            {{producto.descripcion | linebreaks}}
+                        </p>
+                        <p class="mbr-text text2 pt-4 mbr-light mbr-fonts-style display-2">
+                            $ {{producto.precio}}
+                        </p>
+           				<form action="../add_carrito/" method="POST" class="mbr-form form-with-styler" >
+                    		{% csrf_token %}
+                    		<input type="hidden" name="producto" value={{producto.idproducto}}>
+	                        <div class="dragArea form-row">
+	                            {% if producto.accesorio %}
+	                            <input type="hidden" name="Talla" value="Unica">
+	                            {% else %}
+
+	                            <div class="col-md-8 col-12  form-group">
+
+
+									<label for="exampleFormControlSelect1">Talla
+										<button type="button" data-toggle="modal" data-target="#exampleModal" style="background: transparent; border: none; color: pink;">
+										  <u>(Ver medidas)</u>
+										</button> 
+
+
+									</label>
+									<!-- Modal -->
+									<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="false" style="max-height: 650px">
+									  <div class="modal-dialog">
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+									        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									          <span aria-hidden="true">&times;</span>
+									        </button>
+									      </div>
+									      <div class="modal-body" style="max-height: 450px">
+									        <img src="{{producto.foto.url}}" alt="Cat People" width="400" height="400">
+									      </div>
+									      <div class="modal-footer">
+									        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+									      </div>
+									    </div>
+									  </div>
+									</div>
+									<select class="form-control " id="exampleFormControlSelect1">
+									    </select>
+	                                <select class="form-control input display-7" required="required" name="Talla" id="exampleFormControlSelect1">
+									    <option>6</option>
+									    <option>8</option>
+									    <option>10</option>
+									    <option>12</option>
+									    <option>14</option>
+									    <option>S</option>
+									    <option>M</option>
+									    <option>L</option>
+									    <option>XL</option>
+									</select>
+	                            </div>
+	                            {% endif %}
+	                            <div class="col-md-8 col-12  form-group">
+	                            	<label>Cantidad</label>
+	                                <input type="number" name="cantidad" class="form-control " value="1"required="" min="1">
+	                            </div>
+	                            <div class="col-md-8 col-12 input-group-btn mt-2">
+	                            	<button type="submit"  class="btn btn-success display-4"><span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>Agregar al carrito</button>
+	                            </div>
+	                        </div>
+                    	</form>
+
+                    </div>
+                    <!--Btn-->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mbr-section info1 cid-s6PkYGCulz" id="info1-12" style="padding-top: 80px; padding-bottom: 100px">
+
+    <div class="container">
+        <div class="row justify-content-center content-row">
+            <div class="media-container-column title col-12 col-lg-7 col-md-6">
+                <h3 class="mbr-section-subtitle align-left mbr-light pb-3 mbr-fonts-style display-5">
+                    Más opciones...
+                </h3>
+                <h2 class="align-left mbr-bold mbr-fonts-style display-2">Volver a Productos</h2>
+            </div>
+            <div class="media-container-column col-12 col-lg-3 col-md-4">
+                <div class="mbr-section-btn align-right py-4"><a class="btn btn-info display-4" href="../productos">Productos</a></div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+	$('#exampleModal').modal(options)
+</script>
+
+{% endblock %}

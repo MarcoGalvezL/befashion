@@ -1,0 +1,38 @@
+{% extends "mi_cat/base.html" %}
+
+{% block head %}
+
+<link rel="shortcut icon" href="../../static/assets/images/cat-pipol-trans.png" type="image/x-icon">
+<title>Compra en Cat People</title>
+<meta name="description" content="">
+<style type="text/css">
+    .form-control {
+        margin-bottom: 10px;
+    }
+</style>
+
+{% endblock %}
+{% block content %}
+
+<section class="mbr-section article content1 cid-s7deCC6RTq" id="content1-16" style="padding-top: 150px">
+    <div class="container">
+        <div class="media-container-row">
+            <div class="title col-12 col-md-8">
+                <h2 class="align-center pb-3 mbr-fonts-style display-2"><strong>Finaliza tu pedido</strong></h2>
+                <h3 class="mbr-section-subtitle align-center mbr-light mbr-fonts-style display-5">
+                Completa el formulario para finalizar tu pedido.             
+            </div>
+        </div>
+        <div class="media-container-row">
+            <div class="mbr-text col-12 mbr-fonts-style display-7 col-md-8">
+                <form action='../../realizar_pedido2/' method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+                    {{form.as_table}}
+                    <button class="btn btn-success" type="submit" value="buscador">Pagar</button>
+				</form>
+				</div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

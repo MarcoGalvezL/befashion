@@ -1,0 +1,73 @@
+{% extends "zonaoutlet/base.html" %}
+
+{% block ddlcategoria %}
+<div class="dropdown-menu">
+    <a class="text-black dropdown-item display-4"  href="../productos">Todo<br></a>
+    {% for c in categorias %}
+        <a class="text-black dropdown-item display-4"  href="../productos?id={{c.idcategoria}}">{{c.nombre}}<br></a>
+    {% endfor %}        
+</div>
+{% endblock %}
+
+
+{% block content %}
+<section class="mbr-section content4 cid-s0TVzR1mJj" id="content4-e" style="padding-top: 200px">
+    <div class="container">
+        <div class="media-container-row">
+            <div class="title col-12 col-md-8">
+                <h2 class="align-center pb-3 mbr-fonts-style display-2"><strong>Finaliza tu pedido</strong></h2>
+                <h3 class="mbr-section-subtitle align-center mbr-light mbr-fonts-style display-5">
+                    Haz click en pagar para finalizar el pedido, seras redirigido a mercado pago para completar la compra. </h3>         
+            </div>
+        </div>
+    </div>
+</section>
+<section class="mbr-section article content1 cid-s0VbOC4X1w" id="content1-16" style="padding-bottom: 100px">
+    <div class="container">
+        <div class="media-container-row">
+            <div class="mbr-text col-12 mbr-fonts-style display-7 col-md-8">
+                <h3 class="mbr-section-subtitle align-left mbr-light mbr-fonts-style display-5">
+                    Compra en {{nombre}}:
+                    <br><br>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col-4">
+                          </th>
+                          <th scope="col-4">
+                              Talla  Cantidad
+                          </th>
+                          <th scope="col-4">
+                              Subtotal
+                          </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for c in carrito_has_p %}
+                    <tr>
+                        <th scope="row">
+                            {{c.producto_idproducto.nombre}}
+                        </th>
+                        <th>
+                            {{c.talla}}  {{c.cantidad}}
+                        </th>
+                        <th>
+                         $ {{c.subtotal}}
+                        </th>
+                     </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
+                    Total de la compra: &nbsp;  $ {{total}} <br>
+                    Delivery a {{compra.delivery_iddelivery}}: &nbsp;$ {{compra.delivery_iddelivery.precio}} <br>
+                    <hr>
+                    <strong>Total: $ {{compra.total_delivery}} </strong> 
+                </h3>
+                <br>   
+               <a class="btn btn-info display-4" href="{{MP.response.sandbox_init_point}}">Pagar</a>
+			</div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

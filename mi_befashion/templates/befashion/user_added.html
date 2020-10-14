@@ -1,0 +1,57 @@
+{% extends "befashion/Base.html" %}
+{% block title %}
+<title>Nuevo Usuario</title>
+{% endblock %}
+
+{% block content %}
+<br/>
+<br/>
+<br/>
+
+<section class="mbr-section content4 cid-s9gAS47hVx" id="content4-11">
+    <div class="container">
+        <div class="media-container-row">
+            <br/>
+            <div class="title col-12 col-md-8">
+                <br/>
+                <br/>
+                <br/>
+                <h2 class="align-center pb-3 mbr-fonts-style display-1"><strong>{{titulo}}</strong></h2>
+                <h3 class="mbr-section-subtitle align-center mbr-light mbr-fonts-style display-5">Befashion</h3>
+                <br/>
+                <br/>
+                <br/>
+            </div>
+        </div>
+    </div>
+</section>
+<br/>
+<section class="features3 cid-s9gAS47hVx" id="content9-16">
+    <div class="container">
+        <div class="inner-container" style="width: 100%;">
+            <hr class="line" style="width: 10%;">
+            <div class="section-text align-center mbr-fonts-style display-5">
+                    {{alerta}}
+                </div>
+            <hr class="line" style="width: 10%;">
+        </div>
+    </div>
+</section>
+<br/>
+<section class="features3 cid-s9gAS47hVx" id="content8-17">
+    <div class="container">
+        <div class="media-container-row title">
+            <div class="col-12 col-md-8">
+                <div class="mbr-section-btn align-center">
+                    {% if user.is_authenticated %}
+                    <a class="btn btn-success display-4" href="../login">Regresar Perfil</a>
+                    {% else %}
+                    <a class="btn btn-info display-4" href="../productos">PRODUCTOS</a>
+                    <a class="btn btn-success display-4" href="../login">INGRESAR</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
