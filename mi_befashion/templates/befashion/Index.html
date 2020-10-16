@@ -131,7 +131,8 @@ function myFunction() {
                             {% for c in destacados %}
                             <div class="mbr-gallery-item mbr-gallery-item--p2" data-video-url="false" data-tags="Increíble">
                                 <div href="#lb-extGallery7-2l" data-slide-to="{{forloop.counter0}}" data-toggle="modal">
-                                    <img src="{{c.foto.url}}" alt="" title=""><span class="icon-focus"></span><span class="mbr-gallery-title mbr-fonts-style display-7"><a href="../../{{c.modulo_idmodulo.nombre}}/item/{{c.slug}}/" class="text-white" style="font-size:30px;">VER PRODUCTO</a></span>
+                                    <img src="{{c.foto.url}}" alt="" title=""><span class="icon-focus"></span><span class="mbr-gallery-title mbr-fonts-style display-7"><a href="../../{% if c.modulo_idmodulo.nombre == 'Accesorios' %}Accesories{% else %}{{c.modulo_idmodulo.nombre}}{% endif %}/item/{{c.slug}}/" class="text-white" style="font-size:30px;">VER PRODUCTO</a></span>
+                                    {{c.agotado}}
                                 </div>
                             </div>
                             {% endfor %}
@@ -150,6 +151,7 @@ function myFunction() {
                                 {% for c in destacados %}
                                 <div class="carousel-item {% if forloop.first %}active {% endif %}">
                                     <img src="{{c.foto.url}}" alt="" title="">
+                                    c.agotado
                                 </div>
                                 {% endfor %}
                                 

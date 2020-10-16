@@ -135,7 +135,7 @@ def ControlDataStock(productos_en_carrito):
 	objSinStock = []
 	
 	for t in productos_en_carrito:
-		id_talla = Talla.objects.get(nombre=t.talla)
+		id_talla = Talla.objects.get(nombre=t.talla,modulo_idmodulo=t.producto_idproducto.modulo_idmodulo)
 		almacen = Almacen.objects.get(producto_idproducto=t.producto_idproducto.idproducto,talla_idtalla=id_talla.idtalla)
 		if t.cantidad > almacen.stock:
 			objtemp = Almacen.objects.filter(idalmacen=almacen.idalmacen).all()
@@ -186,7 +186,7 @@ def realizar_pedido(request):
 			objAlert['listAlert'] = ListAlmacenSinStock
 			
 		dic={'objalert':objAlert,'form':form,'categorias':categoria,'cliente':cliente,'delivery':delivery,'BtnRegresar':True}
-		return render(request,app_web+'/realizar_pedido.html',dic)
+		return render(request,app_web+'/Realizar_pedido.html',dic)
 
 def realizar_pedido_factura(request):
 	if 'Cantidad' not in request.session or request.session['Cantidad'] == 0:
@@ -204,7 +204,7 @@ def realizar_pedido_factura(request):
 			objAlert['listAlert'] = ListAlmacenSinStock
 			
 		dic={'objalert':objAlert,'form':form,'categorias':categoria,'cliente':cliente,'delivery':delivery,'BtnRegresar':True}
-		return render(request,app_web+'/realizar_pedido_factura.html',dic)
+		return render(request,app_web+'/Realizar_pedido_factura.html',dic)
 
 
 def realizar_pedido2(request):
@@ -225,7 +225,7 @@ def realizar_pedido2(request):
 			objAlert['flagAlert'] = True
 			objAlert['listAlert'] = ListAlmacenSinStock
 			dic={'objalert':objAlert,'form':form,'categorias':categoria,'cliente':cliente,'delivery':delivery,'BtnRegresar':True}
-			return render(request,app_web+'/realizar_pedido.html',dic)
+			return render(request,app_web+'/Realizar_pedido.html',dic)
 		else:
 			rut=''
 			razonsocial=''
@@ -257,7 +257,7 @@ def realizar_pedido2(request):
 				objAlert['listAlert'] = ListAlmacenSinStock
 
 				dic={'objalert':objAlert,'form':form,'categorias':categoria,'cliente':cliente,'delivery':delivery}
-				return render(request,app_web+'/realizar_pedido.html',dic)
+				return render(request,app_web+'/Realizar_pedido.html',dic)
 
 			for t in productos_en_carrito:
 				update_stock(request,t.producto_idproducto,t.talla,t.cantidad)

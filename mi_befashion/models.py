@@ -132,6 +132,7 @@ class Producto(models.Model):
         managed = True
         db_table = 'Producto'
 
+
     def __str__(self):
         # return "name" from translation
         return self.nombre
@@ -164,7 +165,7 @@ class Carritohasproductos(models.Model):
         unique_together = (('idcarritohasproductos', 'carrito_idcarrito', 'producto_idproducto'),)
 
     def inventario(self):
-        id_talla = Talla.objects.get(nombre=self.talla)
+        id_talla = Talla.objects.get(nombre=self.talla,modulo_idmodulo=self.producto_idproducto.modulo_idmodulo)
         almacen = Almacen.objects.get(producto_idproducto=self.producto_idproducto.idproducto,talla_idtalla=id_talla)
         return almacen.stock
 
@@ -281,16 +282,16 @@ class Almacen(models.Model):
     @on_transaction_commit
     def create_stock(sender, instance, created, **kwargs):
         producto=instance
-        print(instance.categoria_idcategoria.idcategoria)
-        print(created)
-        print(instance.tallas.all())
-        print(len(instance.tallas.all()))
+        #print(instance.categoria_idcategoria.idcategoria)
+        #print(created)
+        #print(instance.tallas.all())
+        #print(len(instance.tallas.all()))
         #------------------------------
         modulo=Modulo.objects.get(idmodulo=instance.modulo_idmodulo.idmodulo) 
-        print(modulo)
+        #print(modulo)
         stock_producto_tallas = Almacen.objects.filter(modulo_idmodulo=modulo,producto_idproducto = instance)
         stock_producto_form =instance.tallas.all()
-        print(stock_producto_tallas)
+        #print(stock_producto_tallas)
         for t in stock_producto_tallas:
             flag_exist = False
             for t2 in stock_producto_form:

@@ -28,7 +28,7 @@ admin.site.register(Talla,TallaAdmin)
 
 class ProductoAdmin(admin.ModelAdmin):
     list_display = ('nombre','idproducto','short','destacado','precio')
-    list_filter = ('destacado', 'modulo_idmodulo')
+    list_filter = ('destacado', 'modulo_idmodulo','promocion','preventa','activo',)
     search_fields = ('nombre', 'short', 'descripcion','idproducto', )
     #filter_horizontal = ('tallas',)
 
@@ -69,5 +69,6 @@ admin.site.register(IntegracionPago,IntegracionPagoAdmin)
 class AlmacenPagoAdmin(admin.ModelAdmin):    
     list_display = ('modulo_idmodulo','producto_idproducto','talla_idtalla','stock')    
     readonly_fields = ('modulo_idmodulo', 'producto_idproducto','talla_idtalla')
+    list_filter = ('talla_idtalla','stock','modulo_idmodulo',)
 admin.site.register(Almacen,AlmacenPagoAdmin)
 
