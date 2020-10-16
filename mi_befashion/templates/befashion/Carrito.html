@@ -17,32 +17,46 @@
             <br>
             <!--Card-1-->
             {% for c in productos_en_carrito %}
-            <div class="card px-3 col-12">
-               <div class="card-wrapper media-container-row media-container-row">
-                  <div class="card-box">
-                     <div class="top-line pb-3">
-                        <h4 class="card-title mbr-fonts-style display-5">
-                           <a href="http://www.sbpymes.com" class="text-warning"><strong>{{c.producto_idproducto.modulo_idmodulo.nombre}}  - {{c.producto_idproducto.nombre}}  - Cantidad: {{c.cantidad}} - Talla: {{c.talla}}</strong></a> 
-                        </h4>
-                        <p class="mbr-text cost mbr-fonts-style m-0 display-5">${{c.subtotal}}
-                        </p>
-                     </div>
-                     <div class="bottom-line">
-                        <p class="mbr-text mbr-fonts-style display-7">
-                            {{c.producto_idproducto.descripcion}}
-                        </p>
-                        <p>
-                            <form action='../../del_carrito/' method="post" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            {{alerta}}                                
-                            <input type="hidden" name="eliminar" value={{c.idcarritohasproductos}}>
-                            <button type="submit" style="align-content: center;background-color: transparent; border: none; padding: 0px; color: #f06292;">&times; Eliminar</button>
-                            </form> 
-                        </p>
-                     </div>
+            <div class="card col-12 pb-5" style="padding-bottom: 10px !important">
+              <div class="card-wrapper media-container-row media-container-row">
+                <div class="card-box">
+                  <div class="row">
+                    <div class="col-2">
+                      <!--Image-->
+                      <div class="mbr-figure">
+                        <img src="{{c.producto_idproducto.foto.url}}" alt="" title="" style="width: 150px; height: auto ">
+                      </div>
+                    </div>
+                    <div class="col-10">
+                      <div class="wrapper">
+                        <div class="top-line pb-3">
+                                    <h4 class="card-title mbr-fonts-style display-5">
+                                       <a href="../../Accesories/item/{{c.producto_idproducto.slug}}/" class="text-warning"><strong>{{c.producto_idproducto.modulo_idmodulo.nombre}}  - {{c.producto_idproducto.nombre}}  - Cantidad: {{c.cantidad}} - Talla: {{c.talla}}</strong></a>
+                                    </h4>
+                                    <p class="mbr-text cost mbr-fonts-style m-0 display-5">${{c.subtotal}}
+                                    </p>
+                        </div>
+                        <div class="bottom-line">
+                                    <p class="mbr-text mbr-fonts-style display-7">
+                                        {{c.producto_idproducto.descripcion}}
+                                        <br> En Stock: {{c.inventario}} 
+                                    </p>
+                                    <p>
+                                        <form action='../../del_carrito/' method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {{alerta}}                                
+                                        <input type="hidden" name="eliminar" value={{c.idcarritohasproductos}}>
+                                        <button type="submit" style="align-content: center;background-color: transparent; border: none; padding: 0px; color: #f06292;">&times; Eliminar</button>
+                                        </form> 
+                                    </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-               </div>
+                </div>
+              </div>
             </div>
+            
             {% endfor %}
          </div>
       </div>

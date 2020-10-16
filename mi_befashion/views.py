@@ -18,13 +18,23 @@ import hashlib
 import requests
 from django.views.decorators.csrf import csrf_exempt
 
+from django.contrib.messages import error
+from django.contrib import messages
+
+import socket
+host = 'localhost'
+port = 3000
+
+ser = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+
 #---------------------------------------------------------
 #----------------------BEFASHION--------------------------
 #---------------------------------------------------------
 app_web =  settings.WEBAPP
 
 def index(request):
-	producto_destacados=Producto.objects.filter(destacado=True)[:5]
+	producto_destacados=Producto.objects.filter(destacado=True)
 	#--
 	marca = Marca.objects.all()
 	#--
@@ -42,24 +52,23 @@ def add_carrito(request):
 		cantidad = request.POST['cantidad']
 		talla = request.POST['talla']
 		url_actual = "../"+request.POST['url']
+		
 		if producto.promocion is True or producto.preventa is True:
 			subtotal=int(cantidad)*producto.precio_promocion
 		else:
 			subtotal=int(cantidad)*producto.precio
-				
-
 		if request.session.get('Carrito', False):
 			#get carrito
 			id_cart=request.session['Carrito']
 			carrito=Carrito.objects.get(idcarrito=id_cart)
-			
 			#COMENTADO POR MARCO
 			#subtotal=int(cantidad)*producto.precio
 			test=Carritohasproductos.objects.filter(carrito_idcarrito=carrito,producto_idproducto=producto,talla=talla)
+			#print("Actualización")
 			print(test)
 			#Crear carrito has producto
 			if test:
-				print("enter test producto")
+				#print("enter test producto")
 				#Actualizar CarritoHasProducto
 				test[0].cantidad+=int(cantidad)
 				test[0].subtotal+=subtotal
@@ -70,7 +79,6 @@ def add_carrito(request):
 				carrito.save()
 				url=url_actual+'/item/'+str(producto.slug)
 				return redirect(url)
-			
 			else:
 				#Crear carrito has producto
 				carrito_has_p=Carritohasproductos(carrito_idcarrito=carrito,cantidad=cantidad,subtotal=subtotal,producto_idproducto=producto,talla=talla)
@@ -78,7 +86,6 @@ def add_carrito(request):
 				request.session['Cantidad']+=1
 				carrito.total=carrito.total+subtotal
 				carrito.save()
-
 		else:
 			#crear carrito
 			carrito= Carrito()
@@ -95,15 +102,56 @@ def add_carrito(request):
 			carrito.total=subtotal
 			carrito.save()
 
+
 		url=url_actual+'/item/'+str(producto.slug)
 		return redirect(url)
+
+			
+
+def validar_stock(request,producto,talla,cantidad):
+	id_talla = Talla.objects.get(nombre=talla)
+	almacen = Almacen.objects.get(producto_idproducto=producto.idproducto,talla_idtalla=id_talla.idtalla)
+	rpt = False
+	if (int(cantidad) > int(almacen.stock)):
+		rpt = False
+	else:
+		rpt = True
+	return rpt
+
+def update_stock(request,producto,talla,cantidad):
+	rpt = False
+	id_talla = Talla.objects.get(nombre=talla)
+	almacen = Almacen.objects.get(producto_idproducto=producto.idproducto,talla_idtalla=id_talla.idtalla)
+	try:
+		almacen.stock = int(almacen.stock) - int(cantidad)
+		almacen.save()
+		rpt = True
+	except expression as ex:
+		print(ex)
+
+	return rpt
+
+def ControlDataStock(productos_en_carrito):
+	objSinStock = []
+	
+	for t in productos_en_carrito:
+		id_talla = Talla.objects.get(nombre=t.talla)
+		almacen = Almacen.objects.get(producto_idproducto=t.producto_idproducto.idproducto,talla_idtalla=id_talla.idtalla)
+		if t.cantidad > almacen.stock:
+			objtemp = Almacen.objects.filter(idalmacen=almacen.idalmacen).all()
+			objtemp2 = {'objtemp':objtemp[0],'cantidadpedido':t.cantidad}
+			objSinStock.append(objtemp2)
+		print("Hola aqui")
+		print(objSinStock)
+	return objSinStock
+
 
 def carrito(request):
 	categoria= Categoria.objects.all()	
 	cliente=validateautenticate(request)
+
 	dic={'categorias':categoria,'cliente':cliente}
 	if 'Carrito' in request.session:
-		#print("paso")
 		productos_en_carrito=Carritohasproductos.objects.filter(carrito_idcarrito=request.session['Carrito'])
 		dic['productos_en_carrito']=productos_en_carrito
 		dic['carrito']=Carrito.objects.get(idcarrito=request.session['Carrito'])
@@ -122,149 +170,182 @@ def del_carrito(request):
 		url='../../carrito'
 	return redirect(url)
 
-def realizar_pedido(request):	
+def realizar_pedido(request):
 	if 'Cantidad' not in request.session or request.session['Cantidad'] == 0:
 		return redirect('../../carrito')
 	else:
-		print("No existe Cantidad en Session")
+		productos_en_carrito=Carritohasproductos.objects.filter(carrito_idcarrito=request.session['Carrito'])
 		categoria= Categoria.objects.all()		
 		form=Formulario_Crear_Nuevo()
 		cliente=validateautenticate(request)
 		delivery=Delivery.objects.all()
-		dic={'form':form,'categorias':categoria,'cliente':cliente,'delivery':delivery}
-		return render(request,app_web+'/Realizar_pedido.html',dic)
-
-def realizar_pedido2(request):
-	cliente=validateautenticate(request)
-	if request.POST:
-		rut=''
-		razonsocial=''
-		industria=''
-		nombre=request.POST['nombre']
-		email=request.POST['email']
-		telefono=request.POST['telefono']
-		direccion=request.POST['direccion']
-		tipoDocumento=request.POST['tipoDocumento']
-
-		if tipoDocumento == "factura":
-			rut=request.POST['rut']
-			razonsocial=request.POST['razonsocial']
-			industria=request.POST['industria']
-
-		if 'notas' in request.POST:
-			notas=request.POST['notas']
-		else: 
-			notas=''
-
-		delivery_id=request.POST['delivery']
-		delivery=Delivery.objects.get(iddelivery=delivery_id)
-		precio_delivery=delivery.precio
-		delivery_nombre=delivery.nombre
-
-		id_cart=request.session['Carrito']
-		carrito=Carrito.objects.get(idcarrito=id_cart)
-		total_delivery=precio_delivery+carrito.total
-		productos_en_carrito=Carritohasproductos.objects.filter(carrito_idcarrito=carrito)
-		Texto="Productos "+" (carrito id="+str(carrito.idcarrito)+")"+": \n"
-		for c in productos_en_carrito:
-			cantidad= str(c.cantidad)
-			subtotal= str(c.subtotal)
-			#talla= str(c.talla)
-			producto= str(c.producto_idproducto.nombre)
-			#linea=producto+': '+' '+talla+' '+cantidad+' -  $ '+subtotal+'\n'
-			linea=producto+': '+' '+cantidad+' -  $ '+subtotal+'\n'
-			Texto=Texto+linea
-
-		compra=Pedido(
-			nombre=nombre
-			,email=email
-			,telefono=telefono
-			,direccion=direccion
-			,notas=notas
-			,pedido=Texto
-			,delivery_iddelivery=delivery
-			,total=carrito.total
-			,total_delivery=total_delivery
-			,rut=rut
-			,razonsocial=razonsocial
-			,industria=industria
-			)
-		compra.save()
-		
-		#Email de delivery
-		template = get_template('befashion/email_compra.html')
-		context = {'compra': compra}
-		contenido = template.render(context)
-		email_from = settings.EMAIL_HOST_USER
-		recipient_list = ['heinrrichfacho@gemail.com']
-		asunto='Pedido a través de Mi Tienda Online'
-		send_mail( asunto, contenido, email_from, recipient_list,fail_silently = False)
-		
-		template = get_template('befashion/email_cliente.html')
-		context = { 'compra': compra}
-		contenido = template.render(context)
-		email_from = settings.EMAIL_HOST_USER
-		recipient_list = [email,]
-		asunto='Pedido a través de Tienda Online'
-		send_mail( asunto, contenido, email_from, recipient_list,fail_silently = False)
-
-		ObjPago={'preferenceResult':'','preference':''}
-		flow_response=''
-		Intpago = IntegracionPago.objects.get(idintegrapago=1)
-		# INTEGRACIÓN METODO DE PAGO
-
-		if Intpago.metodo_pago==1:
-			ObjPago = MercadoPago(Intpago.mp_public_key,Intpago.mp_access_token,compra.idpedido,compra.total_delivery)
-		else:
-			ojbfw = {
-				'fw_url':Intpago.fw_url,
-				'fw_secretkey': Intpago.fw_secretkey,
-				'fw_apiKey':Intpago.fw_apiKey,
-				'idpedido':compra.idpedido,
-				'total_delivery':compra.total_delivery,
-				'email':email
-				}
-			flow_response = Flow(ojbfw)
-		# FIN INTEGRACIÓN
-		compra.save()
-		total=carrito.total
-		#---
-		categoria= Categoria.objects.all()
-		#---
-		obj = {'titulo':'MercadoPago1', 'MP':ObjPago['preferenceResult'],'Preference':ObjPago['preference'],'FLOWCL':flow_response,'metodo_pago':Intpago.metodo_pago,
-		'nombre':'Cat People','carrito_has_p':productos_en_carrito,'compra':compra,'total':total
-		,'categorias':categoria,'cliente':cliente
-		}
-		#Elimina todo lo referente a la session
-		#request.session.flush()	
-		#Elimina todo excepto lo que empiezan con _ por ejemplo ()
-		for key in list(request.session.keys()):
-  			if not key.startswith("_"): # skip keys set by the django system
-   				del request.session[key]
-
-		return render(request,'befashion/Realizar_pedido_2.html',obj)
-
-	else:
-		for key in list(request.session.keys()):
-  			if not key.startswith("_"): # skip keys set by the django system
-   				del request.session[key]
-
-		print("HOLA MUNDOOO")
-		print(cliente)
-		dic = {'cliente':cliente,'total':0}
-		return redirect("../../",dic)
+		ListAlmacenSinStock = ControlDataStock(productos_en_carrito)
+		objAlert = {'flagAlert': False}
+		if len(ListAlmacenSinStock) > 0:
+			objAlert['flagAlert'] = True
+			objAlert['listAlert'] = ListAlmacenSinStock
+			
+		dic={'objalert':objAlert,'form':form,'categorias':categoria,'cliente':cliente,'delivery':delivery,'BtnRegresar':True}
+		return render(request,app_web+'/realizar_pedido.html',dic)
 
 def realizar_pedido_factura(request):
 	if 'Cantidad' not in request.session or request.session['Cantidad'] == 0:
 		return redirect('../../carrito')
 	else:
-		print("No existe Cantidad en Session")
+		productos_en_carrito=Carritohasproductos.objects.filter(carrito_idcarrito=request.session['Carrito'])
 		categoria= Categoria.objects.all()		
 		form=Formulario_Crear_Nuevo()
 		cliente=validateautenticate(request)
 		delivery=Delivery.objects.all()
-		dic={'form':form,'categorias':categoria,'cliente':cliente,'delivery':delivery}
+		ListAlmacenSinStock = ControlDataStock(productos_en_carrito)
+		objAlert = {'flagAlert': False}
+		if len(ListAlmacenSinStock) > 0:
+			objAlert['flagAlert'] = True
+			objAlert['listAlert'] = ListAlmacenSinStock
+			
+		dic={'objalert':objAlert,'form':form,'categorias':categoria,'cliente':cliente,'delivery':delivery,'BtnRegresar':True}
 		return render(request,app_web+'/realizar_pedido_factura.html',dic)
+
+
+def realizar_pedido2(request):
+	cliente=validateautenticate(request)
+
+	if request.POST:
+		id_cart=request.session['Carrito']
+		carrito=Carrito.objects.get(idcarrito=id_cart)
+		productos_en_carrito=Carritohasproductos.objects.filter(carrito_idcarrito=carrito)
+
+		ListAlmacenSinStock = ControlDataStock(productos_en_carrito)
+		if len(ListAlmacenSinStock) > 0:
+			objAlert = {'flagAlert': False}
+			categoria= Categoria.objects.all()		
+			form=Formulario_Crear_Nuevo()
+			cliente=validateautenticate(request)
+			delivery=Delivery.objects.all()
+			objAlert['flagAlert'] = True
+			objAlert['listAlert'] = ListAlmacenSinStock
+			dic={'objalert':objAlert,'form':form,'categorias':categoria,'cliente':cliente,'delivery':delivery,'BtnRegresar':True}
+			return render(request,app_web+'/realizar_pedido.html',dic)
+		else:
+			rut=''
+			razonsocial=''
+			industria=''
+			nombre=request.POST['nombre']
+			email=request.POST['email']
+			telefono=request.POST['telefono']
+			direccion=request.POST['direccion']
+			comuna =request.POST['comuna']
+			ciudad= request.POST['ciudad']
+			tipoDocumento=request.POST['tipoDocumento']
+			if tipoDocumento == "factura":
+				rut=request.POST['rut']
+				razonsocial=request.POST['razonsocial']
+				industria=request.POST['industria']
+			if 'notas' in request.POST:
+				notas=request.POST['notas']
+			else: 
+				notas=''
+
+			delivery_id=request.POST['delivery']
+			delivery=Delivery.objects.get(iddelivery=delivery_id)
+			precio_delivery=delivery.precio
+			delivery_nombre=delivery.nombre	
+			total_delivery=precio_delivery+carrito.total
+
+			if len(ListAlmacenSinStock) > 0:
+				objAlert['flagAlert'] = True
+				objAlert['listAlert'] = ListAlmacenSinStock
+
+				dic={'objalert':objAlert,'form':form,'categorias':categoria,'cliente':cliente,'delivery':delivery}
+				return render(request,app_web+'/realizar_pedido.html',dic)
+
+			for t in productos_en_carrito:
+				update_stock(request,t.producto_idproducto,t.talla,t.cantidad)
+			Texto="Productos "+" (carrito id="+str(carrito.idcarrito)+")"+": \n"
+			for c in productos_en_carrito:
+				cantidad= str(c.cantidad)
+				subtotal= str(c.subtotal)
+				#talla= str(c.talla)
+				producto= str(c.producto_idproducto.nombre)
+				#linea=producto+': '+' '+talla+' '+cantidad+' -  $ '+subtotal+'\n'
+				linea=producto+': '+' '+cantidad+' -  $ '+subtotal+'\n'
+				Texto=Texto+linea
+			compra=Pedido(
+				nombre=nombre
+				,email=email
+				,telefono=telefono
+				,direccion=direccion
+				,comuna=comuna
+				,ciudad=ciudad
+				,notas=notas
+				,pedido=Texto
+				,delivery_iddelivery=delivery
+				,total=carrito.total
+				,total_delivery=total_delivery
+				,rut=rut
+				,razonsocial=razonsocial
+				,industria=industria
+				)
+			compra.save()
+			#Email de delivery
+			template = get_template('befashion/email_compra.html')
+			context = {'compra': compra}
+			contenido = template.render(context)
+			email_from = settings.EMAIL_HOST_USER
+			recipient_list = ['heinrrichfacho@gemail.com']
+			asunto='Pedido a través de Mi Tienda Online'
+			send_mail( asunto, contenido, email_from, recipient_list,fail_silently = False)
+
+			template = get_template('befashion/email_cliente.html')
+			context = { 'compra': compra}
+			contenido = template.render(context)
+			email_from = settings.EMAIL_HOST_USER
+			recipient_list = [email,]
+			asunto='Pedido a través de Tienda Online'
+			send_mail( asunto, contenido, email_from, recipient_list,fail_silently = False)
+			ObjPago={'preferenceResult':'','preference':''}
+			flow_response=''
+			Intpago = IntegracionPago.objects.get(idintegrapago=1)
+			# INTEGRACIÓN METODO DE PAGO
+			if Intpago.metodo_pago==1:
+				ObjPago = MercadoPago(Intpago.mp_public_key,Intpago.mp_access_token,compra.idpedido,compra.total_delivery)
+			else:
+				ojbfw = {
+					'fw_url':Intpago.fw_url,
+					'fw_secretkey': Intpago.fw_secretkey,
+					'fw_apiKey':Intpago.fw_apiKey,
+					'idpedido':compra.idpedido,
+					'total_delivery':compra.total_delivery,
+					'email':email
+					}
+				flow_response = Flow(ojbfw)
+			# FIN INTEGRACIÓN
+			compra.save()
+			total=carrito.total
+			#---
+			categoria= Categoria.objects.all()
+			#---
+			obj = {'titulo':'MercadoPago1', 'MP':ObjPago['preferenceResult'],'Preference':ObjPago['preference'],'FLOWCL':flow_response,'metodo_pago':Intpago.metodo_pago,
+			'nombre':'Cat People','carrito_has_p':productos_en_carrito,'compra':compra,'total':total
+			,'categorias':categoria,'cliente':cliente
+			}
+			#Elimina todo lo referente a la session
+			#request.session.flush()	
+			#Elimina todo excepto lo que empiezan con _ por ejemplo ()
+			for key in list(request.session.keys()):
+  				if not key.startswith("_"): # skip keys set by the django system
+   					del request.session[key]
+			return render(request,'befashion/Realizar_pedido_2.html',obj)
+	else:
+		#for key in list(request.session.keys()):
+  		#	if not key.startswith("_"): # skip keys set by the django system
+   		#		del request.session[key]
+		print("HOLA MUNDOOO")
+		print(cliente)
+		dic = {'cliente':cliente,'total':0}
+		return redirect("../../",dic)
+
+
 
 
 def MercadoPago(mp_public_key,mp_access_token,id_pedido,total):
@@ -431,11 +512,11 @@ def add_user(request):
 	if request.user.is_authenticated:
 		user=request.user
 		cliente=Cliente.objects.get(user=user)
-		titulo="Actualiza tu cuenta en Bifashion"
+		titulo="Actualiza tu cuenta en Befashion"
 		Btnsave="Guardar Cambios"
 	else:
 		cliente=""
-		titulo="Crea tu cuenta en Bifashion"
+		titulo="Crea tu cuenta en Befashion"
 		Btnsave="Crear cuenta"
 	dic={'cliente':cliente,'titulo':titulo,'Btnsave':Btnsave}
 	return render(request,'befashion/add_user.html',dic)
@@ -445,6 +526,8 @@ def user_added(request):
 	apellido=request.POST['apellido']
 	telefono=request.POST['phone']
 	direccion=request.POST['direccion']
+	comuna=request.POST['comuna']
+	ciudad=request.POST['ciudad']
 	pkcliente=request.POST['pkcliente']
 	cliente=validateautenticate(request)
 
@@ -458,7 +541,7 @@ def user_added(request):
 		else:
 			usuario=User.objects.create_user(username=email,password=contrasena,email=email)
 			usuario.save()
-			cliente=Cliente(user=usuario,email=email,nombre=nombre,apellido=apellido,contrasena=contrasena,telefono=telefono,direccion=direccion)
+			cliente=Cliente(user=usuario,email=email,nombre=nombre,apellido=apellido,contrasena=contrasena,telefono=telefono,direccion=direccion,comuna=comuna,ciudad=ciudad)
 			cliente.save()
 			dic={'titulo':'Usuario añadido con exito','alerta':'Se añadio correctamente la cuenta, Puede acceder al sistema en la sección de Ingreso.','cliente':cliente}
 			return render(request,'befashion/user_added.html',dic)
@@ -467,7 +550,9 @@ def user_added(request):
             nombre=nombre,
 			apellido=apellido,
 			telefono=telefono,
-			direccion=direccion
+			direccion=direccion,
+			comuna=comuna,
+			ciudad=ciudad
         )
 		dic={'titulo':'Usuario Modificado con exito','alerta':'Se Actualizo correctamente la cuenta.','cliente':cliente}
 	return render(request,'befashion/user_added.html',dic)
@@ -507,203 +592,5 @@ def change_pass(request):
 		dic={'cliente':cliente}
 		return render(request,'befashion/change_pass.html',dic)
 
-#---------------------------------------------------------
-#----------------------ZONA OUTLET------------------------
-#---------------------------------------------------------
-# def productos(request):
-# 	print(request.GET)
-# 	categoria = False
-# 	if request.GET:
-# 		categoria = True
-# 		idpro=request.GET['id']	
-# 	if categoria ==True:
-# 		productos= Producto.objects.filter(categoria_idcategoria =idpro )
-# 	else :
-# 		productos= Producto.objects.all()		
-# 	
-# 	categoria= Categoria.objects.all()
-# 	dic={'productos':productos,'categorias':categoria}
-# 	return render(request,'mi_cat/productos.html',dic)
-# 	return render(request,'befashion/Productos.html',dic)
-
-# def sobre_nosotros(request):
-# 	categoria= Categoria.objects.all()
-# 	dic={'categorias':categoria}
-# 	return render(request,'befashion/Nosotros.html',dic)
-
-# def item(request):
-# 	if request.GET:
-# 		idpro=request.GET['id']
-# 		producto= Producto.objects.get(idproducto=idpro)
-# 	else:
-# 		return redirect('/')
-# 	categoria= Categoria.objects.all()	
-# 	dic={'producto':producto,'categorias':categoria}
-# 	return render(request,'befashion/Item.html',dic)
-
-# def del_carrito(request):
-# 	eliminar=Carritohasproductos.objects.filter(idcarritohasproductos=int(request.POST['eliminar']))
-# 	if eliminar:
-# 		eliminar=Carritohasproductos.objects.get(idcarritohasproductos=int(request.POST['eliminar']))
-# 		subtotal=eliminar.subtotal
-# 		carrito=Carrito.objects.get(idcarrito=eliminar.carrito_idcarrito.idcarrito)
-# 		carrito.total=carrito.total-subtotal
-# 		request.session['Cantidad']-=1
-# 		carrito.save()
-# 		eliminar.delete()
-# 		url='../../carrito'
-# 	return redirect(url)
-
-# def realizar_pedido(request):
-# 		categoria= Categoria.objects.all()		
-# 		form=Formulario_Crear_Nuevo()
-# 		dic={'form':form,'categorias':categoria}
-# 		return render(request,'befashion/Realizar_pedido.html',dic)
-
-
-# def realizar_pedido2(request):
-# 	if request.POST:
-# 		nombre=request.POST['nombre']
-# 		email=request.POST['email']
-# 		telefono=request.POST['telefono']
-# 		direccion=request.POST['direccion']
-# 		if 'notas' in request.POST:
-# 			notas=request.POST['notas']
-# 		else: 
-# 			notas=''
-# 		delivery_id=request.POST['delivery']
-# 		delivery=Delivery.objects.get(iddelivery=delivery_id)
-# 		precio_delivery=delivery.precio
-# 		delivery_nombre=delivery.nombre
-
-# 		id_cart=request.session['Carrito']
-# 		carrito=Carrito.objects.get(idcarrito=id_cart)
-# 		total_delivery=precio_delivery+carrito.total
-# 		productos_en_carrito=Carritohasproductos.objects.filter(carrito_idcarrito=carrito)
-# 		Texto="Productos "+" (carrito id="+str(carrito.idcarrito)+")"+": \n"
-# 		for c in productos_en_carrito:
-# 			cantidad= str(c.cantidad)
-# 			subtotal= str(c.subtotal)
-# 			talla= str(c.talla)
-# 			producto= str(c.producto_idproducto.nombre)
-# 			linea=producto+': '+' '+talla+' '+cantidad+' -  $ '+subtotal+'\n'
-# 			linea=producto+': '+' '+cantidad+' -  $ '+subtotal+'\n'
-# 			Texto=Texto+linea
-
-# 		compra=Pedido(nombre=nombre,email=email,telefono=telefono,
-# 			direccion=direccion,notas=notas,pedido=Texto,
-# 			delivery_iddelivery=delivery,total=carrito.total,total_delivery=total_delivery)
-# 		compra.save()
-		
-
-# 		Email de delivery
-# 		template = get_template('befashion/email_compra.html')
-# 		context = {'compra': compra}
-# 		contenido = template.render(context)
-# 		email_from = settings.EMAIL_HOST_USER
-# 		recipient_list = ['heinrrichfacho@gemail.com']
-# 		asunto='Pedido a través de Mi Tienda Online'
-# 		send_mail( asunto, contenido, email_from, recipient_list,fail_silently = False)
-		
-
-# 		template = get_template('befashion/email_cliente.html')
-# 		context = { 'compra': compra}
-# 		contenido = template.render(context)
-# 		email_from = settings.EMAIL_HOST_USER
-# 		recipient_list = [email,]
-# 		asunto='Pedido a través de Tienda Online'
-# 		send_mail( asunto, contenido, email_from, recipient_list,fail_silently = False)
-
-# 		mp = mercadopago.MP('2545425583027464','Yp3gjXaD5YRwG6V7rLXRLSBA7jYIxV9l')
-# 		Nombre_producto="Compra en: Cat People"
-# 		Total=compra.total_delivery
-# 		preference = {
-# 				"items": [
-# 				{	
-# 					"id": 'ID-CAT-'+str(compra.idpedido),
-# 					"title": Nombre_producto,
-# 					"currency_id": "CLP",
-# 					"description": "Compra a Cat People",
-# 					"quantity": 1,
-# 					"unit_price": Total
-# 					}
-# 				],"back_urls": {
-# 				"success": "localhost:8000/compra_exito/",
-# 				"failure": "localhost:8000/compra_fallo/",
-# 				"pending": "localhost:8000/compra_proceso/"
-# 				},
-# 				"external_reference": compra.idpedido
-
-# 		}
-# 		preferenceResult = mp.create_preference(preference)
-# 		print(preferenceResult)
-# 		print(preferenceResult["response"]["id"])
-# 		compra.save()
-# 		total=carrito.total
-# 		---
-# 		categoria= Categoria.objects.all()
-# 		---
-# 		obj = {'titulo':'MercadoPago1', 'MP':preferenceResult, 'Preference':preference,
-# 		'nombre':'Cat People','carrito_has_p':productos_en_carrito,'compra':compra,'total':total
-# 		,'categorias':categoria
-# 		}
-# 		request.session.flush()		
-# 		return render(request,'befashion/Realizar_pedido_2.html',obj)
-
-# 	else:
-# 		return redirect("../../")
-
-# def contacto(request):
-# 	if request.POST:
-# 		tel = request.POST['phone']
-# 		email = request.POST['email']
-# 		nombre = request.POST['name']
-# 		mensaje = request.POST['message']
-# 		subject = request.POST['subject']		
-# 		template = get_template('befashion/email_contacto.html')
-# 		context = {'nombre': nombre, 'telefono': tel, 'email': email,'asunto':subject, 'mensaje': mensaje}
-# 		contenido = template.render(context)
-# 		email_from = settings.EMAIL_HOST_USER
-# 		recipient_list = ['heinrrichfacho@gmail.com',]
-# 		asunto='Contacto a través de la Web Zona Outlet'
-# 		send_mail( asunto, contenido, email_from, recipient_list,fail_silently = False)
-# 		url = '/?a=Mensaje%20Enviado#extForm17-o'
-# 	return redirect(url) 
-
-
-
-# def compra_exito(request):
-# 	if request.GET:
-# 		if 'external_reference' in request.GET:
-# 			preference=request.GET['external_reference']
-# 			exist= Pedido.objects.filter(idpedido=preference).exists()
-# 			if exist:
-# 				compra=Pedido.objects.get(idpedido=preference)
-# 				compra.estado="Pagado"
-# 				compra.save()
-
-# 	return render(request,'befashion/compra_exito.html')
-
-# def compra_fallo(request):
-# 	if request.GET:
-# 		if 'external_reference' in request.GET:
-# 			preference=request.GET['external_reference']
-# 			exist= Pedido.objects.filter(idpedido=preference).exists()
-# 			if exist:
-# 				compra=Pedido.objects.get(idpedido=preference)
-# 				compra.estado="Fallo en Pago"
-# 				compra.save()
-# 	return render(request,'befashion/compra_fallo.html')
-
-# def compra_proceso(request):
-# 	if request.GET:
-# 		if 'external_reference' in request.GET:
-# 			preference=request.GET['external_reference']
-# 			exist= Pedido.objects.filter(idpedido=preference).exists()
-# 			if exist:
-# 				compra=Compra.objects.get(idpedido=preference)
-# 				compra.estado="Pago en Proceso"
-# 				compra.save()
-# 	return render(request,'befashion/compra_proceso.html')
-
-
+def prueba(request):
+	return render(request,app_web+'/prueba.html')

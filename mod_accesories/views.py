@@ -9,6 +9,7 @@ from django.db.models import Q
 from mi_befashion.models import *
 from django.core.paginator import Paginator
 import random
+from random import shuffle
 #---------------------------------------------------------
 #----------------------BEFASHION--------------------------
 #---------------------------------------------------------
@@ -17,9 +18,9 @@ nro_nuevos = 2
 filtro_modulo="Accesorios"
 
 def index(request):
-	producto_destacados=Producto.objects.filter(destacado=True,modulo_idmodulo__nombre=filtro_modulo)
+	producto_destacados=Producto.objects.filter(destacado=True,modulo_idmodulo__nombre=filtro_modulo).filter(activo=True)
 	#--
-	producto_nuevos = Producto.objects.filter(modulo_idmodulo__nombre=filtro_modulo).order_by('-idproducto')[:10]
+	producto_nuevos = Producto.objects.filter(modulo_idmodulo__nombre=filtro_modulo).filter(activo=True).order_by('-idproducto')[:10]
 	p = Paginator(producto_nuevos, nro_nuevos)
 	page1 = p.page(1)
 	producto_nuevos = page1.object_list
@@ -34,6 +35,7 @@ def index(request):
 	cliente = validateautenticate(request)
 	dic={'destacados':producto_destacados,'nuevos':producto_nuevos,'categorias':categoria,'marcas':marca,'alerta':alerta,'cliente':cliente}	
 	return render(request,app_web+'/Index.html', dic)
+
 
 def productos(request):
 	print(request.GET)
@@ -67,9 +69,9 @@ def productos(request):
 		print ("filters:"+str(filters))		
 	
 	if bol_id_categoria ==True:
-		productos= Producto.objects.filter(**filters).distinct()
+		productos= Producto.objects.filter(**filters).distinct().filter(activo=True)
 	else :
-		productos= Producto.objects.filter(modulo_idmodulo__nombre=filtro_modulo)
+		productos= Producto.objects.filter(modulo_idmodulo__nombre=filtro_modulo).filter(activo=True)
 			
 	#--
 	categoria= Categoria.objects.filter(modulo_idmodulo__nombre=filtro_modulo)
@@ -96,7 +98,11 @@ def item(request,producto):
 			a_codigo.append(id_product)
 		print(a_codigo)		
 		filters["idproducto__in"]=a_codigo	
-		productos= Producto.objects.filter(**filters).distinct()
+		#productos= Producto.objects.filter(**filters).distinct()
+		productos = Producto.objects.filter(modulo_idmodulo__idmodulo=producto.modulo_idmodulo.idmodulo).filter(activo=True)
+		productos = productos.filter(categoria_idcategoria__idcategoria=producto.categoria_idcategoria.idcategoria).distinct()
+		shuffle(productos)
+		productos =productos[:8] 
 		print(productos)		
 		#--
 	else:

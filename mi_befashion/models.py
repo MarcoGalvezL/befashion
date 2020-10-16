@@ -11,6 +11,9 @@ from django.core.validators import FileExtensionValidator
 from django.utils.html import mark_safe
 from smart_selects.db_fields import ChainedForeignKey,ChainedManyToManyField
 from django.utils.text import slugify
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+from django.db import transaction
 #---------------------------------------------------------
 #----------------------BEFASHION--------------------------
 #---------------------------------------------------------
@@ -71,7 +74,18 @@ class Talla(models.Model):
         # return "name" from translation
         return self.nombre
 
+class Promocion(models.Model):
+    idpromocion = models.AutoField(db_column='idPromocion', primary_key=True)
+    titulo = models.CharField(db_column='Titulo', max_length=45, blank=True, null=True)
+    descripcion = models.CharField(db_column='Descripcion', max_length=90, blank=True, null=True)
+    nombre_boton = models.CharField(db_column='Boton_Name', max_length=20, blank=True, null=True)
+    link_boton = models.CharField(db_column='Link_Boton', max_length=255, blank=True, null=True)
+    foto = models.FileField(upload_to='img/promociones', db_column='Foto', validators=[FileExtensionValidator(allowed_extensions=['jpg','png','jpeg'])])
+    modulo_idmodulo = models.ForeignKey(Modulo, models.CASCADE, db_column='modulo_idmodulo')
 
+    class Meta:
+        managed = True
+        db_table = 'Promocion'
 
 
 class Producto(models.Model):
@@ -87,9 +101,9 @@ class Producto(models.Model):
     foto3 = models.FileField(upload_to='img/productos', db_column='Foto 3', validators=[FileExtensionValidator(allowed_extensions=['jpg','png','jpeg'])], blank=True, null=True)  # Field name made lowercase.
     #promocion = models.IntegerField(db_column='Promocion', blank=True, null=True)  # Field name made lowercase.
     promocion = models.BooleanField(db_column='Promocion',default=False)  # Field name made lowercase.
-    activo = models.BooleanField(db_column='Activo', default=False) 
     modulo_idmodulo = models.ForeignKey(Modulo, models.CASCADE, db_column='modulo_idmodulo')  # Field name made lowercase.   
     #categoria_idcategoria = models.ForeignKey(Categoria, models.CASCADE, db_column='categoria_idcategoria')  # Field name made lowercase.  
+    activo = models.BooleanField(db_column='Activo',default=True)
     categoria_idcategoria= ChainedForeignKey(
         Categoria,
         chained_field="modulo_idmodulo",
@@ -122,13 +136,11 @@ class Producto(models.Model):
         # return "name" from translation
         return self.nombre
 
+
     def save(self, *args, **kwargs):
         self.slug = slugify(str(self.idproducto) + '-' + self.nombre)
         super(Producto, self).save(*args, **kwargs)
 
-#---------------------------------------------------------
-#----------------------ZONA OUTLET------------------------
-#---------------------------------------------------------
 
 class Carrito(models.Model):
     idcarrito = models.AutoField(db_column='idCarrito', primary_key=True)  # Field name made lowercase.
@@ -151,6 +163,12 @@ class Carritohasproductos(models.Model):
         db_table = 'CarritoHasProductos'
         unique_together = (('idcarritohasproductos', 'carrito_idcarrito', 'producto_idproducto'),)
 
+    def inventario(self):
+        id_talla = Talla.objects.get(nombre=self.talla)
+        almacen = Almacen.objects.get(producto_idproducto=self.producto_idproducto.idproducto,talla_idtalla=id_talla)
+        return almacen.stock
+
+
 
 class Delivery(models.Model):
     iddelivery = models.AutoField(db_column='idDelivery', primary_key=True)  # Field name made lowercase.
@@ -170,6 +188,8 @@ class Pedido(models.Model):
     idpedido = models.AutoField(db_column='idPedido', primary_key=True)  # Field name made lowercase.
     nombre = models.CharField(db_column='Nombre', max_length=45, blank=True, null=True)  # Field name made lowercase.
     direccion = models.CharField(db_column='Dirección', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    comuna = models.CharField(db_column='Comuna', max_length=255, blank=True, null=True)
+    ciudad = models.CharField(db_column='Ciudad', max_length=255, blank=True, null=True)
     delivery_iddelivery = models.ForeignKey(Delivery, models.CASCADE, db_column='Delivery_idDelivery')  # Field name made lowercase.
     telefono = models.CharField(db_column='Telefono', max_length=45, blank=True, null=True)  # Field name made lowercase.
     email = models.CharField(db_column='Email', max_length=255, blank=True, null=True)  # Field name made lowercase.
@@ -196,6 +216,8 @@ class Cliente(models.Model):
     email = models.CharField(db_column='Email', max_length=100, blank=True, null=True)  # Field name made lowercase.
     telefono = models.CharField(db_column='Telefono', max_length=45, blank=True, null=True)  # Field name made lowercase.
     direccion = models.CharField(db_column='Dirección', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    comuna = models.CharField(db_column='Comuna', max_length=255, blank=True, null=True)
+    ciudad = models.CharField(db_column='Ciudad', max_length=255, blank=True, null=True)
     user = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
@@ -232,3 +254,63 @@ class IntegracionPago(models.Model):
     class Meta:
         managed = True
         db_table = 'IntegracionPago'
+
+
+#---------------------------------------------------------
+#----------------------CONTROL STOCK----------------------
+#---------------------------------------------------------
+
+class Almacen(models.Model):
+    idalmacen = models.AutoField(db_column='idalmacen', primary_key=True)
+    modulo_idmodulo = models.ForeignKey(Modulo, models.CASCADE, db_column='modulo_idmodulo')
+    producto_idproducto = models.ForeignKey(Producto, models.CASCADE, db_column='producto_idproducto')
+    talla_idtalla = models.ForeignKey(Talla, models.CASCADE, db_column='talla_idtalla')
+    stock = models.IntegerField(db_column='Stock')
+    
+    class Meta:
+        managed = True
+        db_table = 'Almacen'
+
+    def on_transaction_commit(func):
+        def inner(*args, **kwargs):
+            transaction.on_commit(lambda: func(*args, **kwargs))
+        return inner
+
+
+    @receiver(post_save, sender=Producto)
+    @on_transaction_commit
+    def create_stock(sender, instance, created, **kwargs):
+        producto=instance
+        print(instance.categoria_idcategoria.idcategoria)
+        print(created)
+        print(instance.tallas.all())
+        print(len(instance.tallas.all()))
+        #------------------------------
+        modulo=Modulo.objects.get(idmodulo=instance.modulo_idmodulo.idmodulo) 
+        print(modulo)
+        stock_producto_tallas = Almacen.objects.filter(modulo_idmodulo=modulo,producto_idproducto = instance)
+        stock_producto_form =instance.tallas.all()
+        print(stock_producto_tallas)
+        for t in stock_producto_tallas:
+            flag_exist = False
+            for t2 in stock_producto_form:
+                if t.talla_idtalla.idtalla ==t2.idtalla:
+                    flag_exist =True
+            if flag_exist :
+                print("encontrado")
+            else :
+                print("no encontrado")
+                t.delete()
+
+        #------------------------------
+        for t in stock_producto_form:                 
+            talla=Talla.objects.get(idtalla=t.idtalla)             
+            stock_producto = Almacen.objects.filter(modulo_idmodulo=modulo,producto_idproducto = instance, talla_idtalla = talla)
+            print(stock_producto)
+            print(len(stock_producto))
+            if len(stock_producto) == 0:
+                stock=Almacen(modulo_idmodulo=modulo,producto_idproducto=producto,talla_idtalla=talla,stock=0)
+                stock.save()            
+
+        # write you functionality    
+        # pass

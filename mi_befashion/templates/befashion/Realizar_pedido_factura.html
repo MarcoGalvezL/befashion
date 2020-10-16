@@ -46,6 +46,12 @@
                                     <input type="text" name="direccion" class="form-control display-7 form-group" value="{{cliente.direccion}}" placeholder="Direccion" required="" id="id_direccion">
                                 </div>
                                 <div data-for="email" class="col-md-12  form-group">
+                                    <input type="text" name="comuna" class="form-control display-7 form-group" value="{{cliente.comuna}}" placeholder="Comuna" required="" id="id_comuna">
+                                </div>
+                                <div data-for="email" class="col-md-12  form-group">
+                                    <input type="text" name="ciudad" class="form-control display-7 form-group" value="{{cliente.ciudad}}" placeholder="Ciudad" required="" id="id_ciudad">
+                                </div>
+                                <div data-for="email" class="col-md-12  form-group">
                                     <select class="form-control input display-7 form-group" required="required" name="delivery" >
                                         {% for c in delivery %}
                                            <option value="{{c.iddelivery}} " > {{c.nombre}} </option>

@@ -2,13 +2,18 @@
 {% block content %}
 <style type="text/css">
    @media screen and (min-width: 600px) {
-   section.hide {
-   display: none;
+      section.hide {
+      display: none;
+      }
+      
    }
-   section.mobi {
-   padding-top: 75px; 
+   @media screen and (min-width: 600px) {
+   
+      div.mobi {
+      padding-top: 100px; 
+      }
    }
-   }
+
 </style>
 <script type="text/javascript">
    function myFunction() {
@@ -23,10 +28,10 @@
 <div class="container" style="margin: 0px; margin-left: 0px; max-width: 10000px">
    <section class="mbr-section content11 cid-s8PekU0Uoa hide" style="padding-top: 80px; padding-bottom: 0px; max-height: 400px">
       <div class="container">
-         <h1 class="mbr-section-title mbr-regular pb-3 mbr-fonts-style display-2">Detalle del producto</h1>
+         <h1 class="mbr-section-title mbr-regular pb-3 mbr-fonts-style display-2" style="padding-bottom: 0px; margin-bottom: 0px">{{producto.nombre}}</h1>
       </div>
    </section>
-   <div class="row">
+   <div class="row mobi">
       <div class="col-md-6 col-12">
          <section class="extGallery testimonials-slider cid-sahHG88XIp mobi" data-interval="false" id="extGallery6-3o">
             <div class="main container">
@@ -35,10 +40,10 @@
                      <ol class="carousel-indicators">
                         <li class="li1" data-slide-to="0" style="background-image: url({{producto.foto.url}});"></li>
                         {% if producto.foto2 != "" %}
-                        <li class="li1" data-slide-to="0" style="background-image: url({{producto.foto2.url}});"></li>
+                        <li class="li1" data-slide-to="1" style="background-image: url({{producto.foto2.url}});"></li>
                         {% endif %}
                         {% if producto.foto3 != "" %}
-                        <li class="li1" data-slide-to="0" style="background-image: url({{producto.foto3.url}});"></li>
+                        <li class="li1" data-slide-to="2" style="background-image: url({{producto.foto3.url}});"></li>
                         {% endif %}
                      </ol>
                      <div class="carousel-inner">
@@ -46,17 +51,8 @@
                         <div class="carousel-item ">
                            <div class="media-container-row">
                               <div class="col-md-12">
-                                 <div class="row justify-content-center">
-                                    <div class="col-md-6">
-                                       <div class="text-box align-left">
-                                       </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                       <div class="text-box align-right">
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="wrap-img " style="background-image: url({{producto.foto.url}});">
+                                 
+                                 <div class="wrap-img " style="background-image: url({{producto.foto.url}}); background-size: contain;">
                                  </div>
                               </div>
                            </div>
@@ -65,17 +61,8 @@
                         <div class="carousel-item ">
                            <div class="media-container-row">
                               <div class="col-md-12">
-                                 <div class="row justify-content-center">
-                                    <div class="col-md-6">
-                                       <div class="text-box align-left">
-                                       </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                       <div class="text-box align-right">
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="wrap-img " style="background-image: url({{producto.foto2.url}});">
+                                 
+                                 <div class="wrap-img" style="background-image: url({{producto.foto2.url}}); background-size: contain; ">
                                  </div>
                               </div>
                            </div>
@@ -85,17 +72,7 @@
                         <div class="carousel-item ">
                            <div class="media-container-row">
                               <div class="col-md-12">
-                                 <div class="row justify-content-center">
-                                    <div class="col-md-6">
-                                       <div class="text-box align-left">
-                                       </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                       <div class="text-box align-right">
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="wrap-img " style="background-image: url({{producto.foto3.url}});">
+                                 <div class="wrap-img " style="background-image: url({{producto.foto3.url}}); background-size: contain; ">
                                  </div>
                               </div>
                            </div>
@@ -108,13 +85,13 @@
          </section>
       </div>
       <div class="col-md-6 col-12">
-         <section class="extFeatures cid-sahHPiiCOB" id="extFeatures62-3p">
+         <section class="extFeatures cid-sahHPiiCOB" id="extFeatures62-3p" style="padding-top:0px;">
             <div class="container">
                <form id="sendsubmit" action="/add_carrito/" method="POST" class="mbr-form form-with-styler" >
                   {% csrf_token %}
-                  <h1 class="mbr-section-title mbr-regular pb-3 mbr-fonts-style display-2">{{producto.nombre}}</h1>
+                  <h1 class="mbr-section-title mbr-regular pb-3 mbr-fonts-style display-2" style="margin-bottom: 0px !important">{{producto.nombre}}</h1>
                   <p class="mbr-text align-left mbr-light pb-4 mbr-fonts-style display-7">
-                     {{producto.descripcion | linebreaks}}
+                     {{producto.descripcion | linebreaksbr}}
                   </p>
                   <h3 class="newPrice mbr-bold mbr-fonts-style display-5">
                      {% if producto.promocion is True or producto.preventa is True %}
@@ -125,7 +102,7 @@
                   </h3>
                   <br>
                   <div class="col-md-6 col-6" style="margin: 0px; padding-left: 0px;">
-                     <input type="number" name="cantidad" class="form-control sm" placeholder="Cantidad"  required="required">
+                     <input type="number" name="cantidad" class="form-control sm" placeholder="Cantidad"  required="required" value="1">
                   </div>
                   <br>
                   <div class="col-md-6 col-6" style="margin: 0px; padding-left: 0px;">

@@ -13,36 +13,47 @@ from django.contrib.auth.models import User
 
 class Formulario_Crear_Nuevo(forms.Form):
 
-	nombre = forms.CharField(label=False,widget=forms.TextInput(
+	nombre = forms.CharField(label='Nombre',widget=forms.TextInput(
 		attrs={
 			'class':'form-control display-7 form-group',
 			'placeholder': 'Nombre'
 		}),required=True)
 
-	email = forms.EmailField(label=False,widget=forms.EmailInput(
+	email = forms.EmailField(label='Email',widget=forms.EmailInput(
 		attrs={
 			'class':'form-control display-7 form-group',
 			'placeholder': 'Email'
 		}),required=True)
 
-	telefono = forms.CharField(label=False,widget=forms.TextInput(
+	telefono = forms.CharField(label='Telefono',widget=forms.TextInput(
 		attrs={
 			'class':'form-control display-7 form-group',
 			'placeholder': 'Teléfono'
 		}),required=True)
 
-	direccion = forms.CharField(label=False,widget=forms.TextInput(
+	direccion = forms.CharField(label='Direccion',widget=forms.TextInput(
 		attrs={
 			'class':'form-control display-7 form-group',
 			'placeholder': 'Direccion'
 		}),required=True)
 
-	delivery = forms.ModelChoiceField(queryset=Delivery.objects.all(),label=False, widget=forms.Select(attrs={
+	comuna = forms.CharField(label='Comuna',widget=forms.TextInput(
+		attrs={
+			'class':'form-control display-7 form-group',
+			'placeholder': 'Comuna'
+		}),required=True)
+	ciudad = forms.CharField(label='Ciudad',widget=forms.TextInput(
+		attrs={
+			'class':'form-control display-7 form-group',
+			'placeholder': 'Ciudad'
+		}),required=True)
+
+	delivery = forms.ModelChoiceField(queryset=Delivery.objects.all(),label='Selecciona una opcion de delivery', widget=forms.Select(attrs={
 			'class':'form-control display-7 form-group',
 			'placeholder': 'Delivery'
 		}), required=True)
 
-	notas = forms.CharField(label=False,widget=forms.Textarea(
+	notas = forms.CharField(label='notas',widget=forms.Textarea(
 		attrs={
 			'class':'form-control display-7 form-group',
 			'placeholder': 'Notas',

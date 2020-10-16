@@ -136,7 +136,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    '/Users/anaflaviaalbareda/Desktop/webs_clientes/be_fashion/v1/befashion_v3',
+    '/Users/anaflaviaalbareda/Desktop/webs_clientes/be_fashion/v2/befashion',
 )
 
 #STATIC_ROOT= 'E:/Django/AnaFlavia/Proyectos/befashion/static'

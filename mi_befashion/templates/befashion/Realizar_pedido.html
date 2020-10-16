@@ -17,6 +17,32 @@
                                 </div>
                             </div>
                         </div>
+                        {% if objalert.flagAlert == True %}
+                        <div class="container">
+                            <div class="row" style="background-color: #E58353 !important;padding: 15px;
+                            margin-bottom: 20px;
+                            margin-top: 20px;
+                            border: 1px solid transparent;
+                            border-radius: 3px;" >
+                                <div class="col-md-12 "> 
+                                        {% for a in objalert.listAlert %}
+                                            <div class="col-md-12" style="color:white;font-size: x-large;">
+                                                <span class="mbri-info"></span>
+                                                <message>No contamos con el stock suficiente para el producto <b>{{a.objtemp.producto_idproducto.nombre}}</b> en la talla <b>{{a.objtemp.talla_idtalla}}.</b> </message> 
+                                                <br>
+                                                <h5 style="font-family: Arial Narrow;padding-left: 30px;padding-bottom: 20px;" >su pedido es de {{ a.cantidadpedido }} unidades pero solo contamos con {{ a.objtemp.stock }}. </h5>
+                                            </div> 
+                                        {% endfor %}
+                                        <a class="btn btn-sm btn-white display-4" href="../carrito">
+                                            <span class="mbri-logout mbr-iconfont mbr-iconfont-btn"> 
+                                            </span>
+                                            Volver al Carrito
+                                        </a> 
+                                        <!-- <a href="../carrito" style="color:blue;" value="Regresar">Volver al Carrito</a> -->
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
                         <div class="col-md-12">
                             <h2 class="mbr-fonts-style mbr-fonts-style mb-4 display-2">Realizar tu pedido (Boleta)</h2>
                         </div>
@@ -38,9 +64,15 @@
                                     <input type="text" name="direccion" class="form-control display-7 form-group" value="{{cliente.direccion}}" placeholder="Direccion" required="" id="id_direccion">
                                 </div>
                                 <div data-for="email" class="col-md-12  form-group">
+                                    <input type="text" name="comuna" class="form-control display-7 form-group" value="{{cliente.comuna}}" placeholder="Comuna" required="" id="id_comuna">
+                                </div>
+                                <div data-for="email" class="col-md-12  form-group">
+                                    <input type="text" name="ciudad" class="form-control display-7 form-group" value="{{cliente.ciudad}}" placeholder="Ciudad" required="" id="id_ciudad">
+                                </div>
+                                <div data-for="email" class="col-md-12  form-group">
                                     <select class="form-control input display-7 form-group" required="required" name="delivery" >
                                         {% for c in delivery %}
-                                           <option value="{{c.iddelivery}} " > {{c.nombre}} </option>
+                                           <option value="{{c.iddelivery}} " > {{c.nombre}} - {{c.precio}}</option>
                                         {% endfor %}
                                    </select>
                                 </div>  
